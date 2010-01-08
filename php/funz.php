@@ -89,15 +89,13 @@ function getMap($map,$nLayer){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $proj=getProiection($map);
-//     print_r($meta);
     if ($meta["wms_onlineresource"] != null) {
 	$tipoServer="WMS";
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-/*	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap";*/
+	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[0]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
 	$tipoServer="WFS";
-/*	$request=$meta["wfs_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wfs_server_version"]."&REQUEST=GetMap";*/
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+	$request="";
+	#$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[0]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
 
     }
     return $request;
