@@ -1,0 +1,31 @@
+h1 {
+    color: gray;
+
+}
+
+h4 {
+    color: gray;
+
+}
+
+li {
+    list-style-type: square;
+    color: gray;
+
+}
+
+.url {
+    background-color:gray;
+    color:white;
+
+}
+
+.left {
+   width: 50%;
+   
+}
+
+.right {
+   width: 50%;
+   left: 50%;
+}

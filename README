@@ -1,0 +1,19 @@
+urlCapabilities project ()
+
+-- AUTHORS ------------------------------------------------------------
+
+See AUTHORS file for details.
+
+-- ABOUT --------------------------------------------------------------
+
+urlCapabilities create a page to show the url and the capabilities from wms/wfs 
+
+-- DEPENDENCIES -------------------------------------------------------
+
+APACHE >= 2
+PHP >= 5
+PHP-MAPSCRIPT >= 5
+
+-- INSTALL ------------------------------------------------------------
+
+See INSTALL for details

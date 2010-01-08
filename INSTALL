@@ -1,0 +1,11 @@
+WARNING you need apache2, php5 and php5-mapscript installed on your system
+to use urlCapabilities.
+
+* Copy the urlCapabilities folder in your web server directory; in debian like distributions is /var/www 
+* Copy your mapfile/mapfiles to urlCapabilities/mapfile/
+* Now you can see the page using a web browser at the address http://localhost/urlCapabilities
+
+You can change the page aspect choosing a different css file inside the css folder or creating a new file
+
+That's all enjoy.
+

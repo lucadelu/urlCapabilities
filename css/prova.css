@@ -1,0 +1,48 @@
+body {
+    font-family: arial,sans-serif;
+    font-size: 76%; 
+/*     ext-align: center */
+}
+
+.url {
+    background-color : gray;
+    color : white;
+    text-decoration : blink;
+  }
+
+div.container {
+    position: relative;
+}
+
+/*div#navigation{float:right;width: 13em}
+div#content{margin-right: 13em;padding: 1em;background-color: #fff}*/
+
+div.left {
+    margin-right: 50%;
+    width: 50%;
+    left: 0px;
+/*    width: 50%;
+    border-right: 2px;
+    border-right-color: gray;*/
+  }
+
+
+div.right {
+    width: 50%;
+    left: 50%;
+  }
+
+h1 {
+    color: gray;
+  }
+
+
+h4 {
+    color: gray;
+  }
+
+
+li {
+    list-style-type: square;
+    color: gray;
+  }
