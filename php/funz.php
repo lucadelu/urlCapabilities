@@ -1,6 +1,23 @@
 <?php
 
-#ritorna i nomi dei mapfile all'interno di una cartella
+/***************************************************************************
+php functions for index.php
+
+                             -------------------
+begin                : 2010-01-03 
+copyright            : (C) 2009 by luca delucchi
+email                : lucadeluge@gmail.com 
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License.	   *
+ *                                                                         *
+ ***************************************************************************/
+
+#return mapfile/s's name inside mapfile path
 function getMapfiles($path){
     $mapfiles=array();
     $x=0;
@@ -11,7 +28,7 @@ function getMapfiles($path){
     return $mapfiles;
 }
 
-#ritorna i metadati del web per creare la stringa di query
+#return web metadata for the query string
 function getMetadati($map){
     $web=$map->web;
     $hashTable = $web->metadata;
@@ -22,7 +39,25 @@ function getMetadati($map){
     return $metadati;
 }
 
-#ritorna la richiesta del getCapabilities
+#return layer/s's name of a mapfile 
+function getLayersName($map){
+    $nLayers=$map->numlayers;
+    $names=array();
+    for ($i=0;$i<$nLayers;$i++){
+	$Layer= $map->getLayer($i);
+	$names[$i]=$Layer->name;
+    }
+    return $names;
+}
+
+#return the projection of the mapfile
+function getProiection($map){
+    $proj=$map->getProjection();
+    $epsg=explode("=",$proj);
+    return $epsg[1];
+}
+
+#return getCapabilities query
 function getRequestCapabilities($map){
     $meta=getMetadati($map);
     if ($meta["wms_onlineresource"] != null) {
@@ -35,17 +70,7 @@ function getRequestCapabilities($map){
     return $request;
 }
 
-#ritorna i nomi dei layers all'interno di un mapfile 
-function getLayersName($map){
-    $nLayers=$map->numlayers;
-    $names=array();
-    for ($i=0;$i<$nLayers;$i++){
-	$Layer= $map->getLayer($i);
-	$names[$i]=$Layer->name;
-    }
-    return $names;
-}
-
+#return url of the web service
 function getUrl($map){
     $meta=getMetadati($map);
     if ($meta["wms_onlineresource"] != null) {
@@ -55,12 +80,7 @@ function getUrl($map){
     }
 }
 
-function getProiection($map){
-    $proj=$map->getProjection();
-    $epsg=explode("=",$proj);
-    return $epsg[1];
-}
-
+#return the map of first correct layer
 function getMapAll($map){
     $meta=getMetadati($map);
     $names=getLayersName($map);
@@ -69,22 +89,25 @@ function getMapAll($map){
     if ($meta["wms_onlineresource"] != null) {
 	$tipoServer="WMS";
 	for ($i=0;$i<$nLayers;$i++) {
-		$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$i]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-		$ritorno=get_headers($request,1);
+		$req=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$i]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+		$ritorno=get_headers($req,1);
 		$type=explode("/", $ritorno['Content-Type']);
 		if ($type[0]=='image') {
+			$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$i]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
 			break;
 		} else {
 		}
 	}
     } else {
 	$tipoServer="WFS";
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[0]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+	$request="";
+	#$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[0]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
 
     }
     return $request;
 }
 
+#return the map of the layer selected by a number. WARNING the layer number start from 0
 function getMap($map,$nLayer){
     $meta=getMetadati($map);
     $names=getLayersName($map);

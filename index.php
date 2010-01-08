@@ -1,6 +1,22 @@
 <?php
+/***************************************************************************
+the core of urlCapabilities, it create and show the page with url, the map 
+and getCapabilities
 
-#print $request
+                             -------------------
+begin                : 2010-01-03 
+copyright            : (C) 2009 by luca delucchi
+email                : lucadeluge@gmail.com 
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License.	   *
+ *                                                                         *
+ ***************************************************************************/
+
 require_once 'php/funz.php';
 
 echo <<<EOD
@@ -15,27 +31,35 @@ echo <<<EOD
 	  </head>
  	  <body style="background-color:#FFFFFF">
 EOD;
-
+# change $path if you want show the mapfile inside another path
 $path="mapfile/";
-
+# return all the mapfiles inside the path 
 $mapfiles=getMapfiles($path);
+# for each mapfile
 for ($w=0;$w<count($mapfiles);$w++){
+    #create a new mapfile object
     $mapfile = ms_newMapObj($mapfiles[$w]);
+    #mapfile name
     $nomeMapFile=$mapfile->name;
-    #$nomeLeft="left".str_replace(" ","",$nomeMapFile);
-    #$nomeRight="right".str_replace(" ","",$nomeMapFile);
+    #name for the id container
     $contUrl="cont".str_replace(" ","",$nomeMapFile);
 
     echo '    <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
 		<div class="left"><h4><u>Layers:</u></h4>
 		<ul id="multi">';
+    #names of layers
     $nameLayers=getLayersName($mapfile);
+    #show the layers name in a list
     for ($i=0;$i<count($nameLayers);$i++){
 	echo "<li>".$nameLayers[$i]."</li>";
     }
+    #create getCapabilities string
     $richiesta=getRequestCapabilities($mapfile);
+    #create url string
     $url=getUrl($mapfile);
-    $urlMappa=getMap($mapfile,9);
+    #create map string, it use getMap for the first layer
+    $urlMappa=getMap($mapfile,0);
+    #name for the id url
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '</ul>
 	       </div>
