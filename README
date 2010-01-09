@@ -12,7 +12,7 @@ urlCapabilities create a page to show the url and the capabilities from wms/wfs 
 
 APACHE >= 2
 PHP >= 5
-PHP-MAPSCRIPT >= 5
+PHP-MAPSCRIPT >= 5.4
 
 -- INSTALL ------------------------------------------------------------
 
