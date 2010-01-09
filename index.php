@@ -60,7 +60,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     #create map string, it use getMap for the first layer
     $urlMappa=getMap($mapfile,0);
     #name for the id url
-    echo $urlMappa;
+    #echo $urlMappa;
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '</ul>
 	       </div>
