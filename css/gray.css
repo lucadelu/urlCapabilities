@@ -1,9 +1,8 @@
 body {
     font-family: arial,sans-serif;
-/*    font-size: 76%; */
     color: gray;
     height:100%;
-    width:100%;
+    width:95%;
 }
 
 /*div.container {
@@ -62,16 +61,6 @@ div.separation {
     border-bottom-style:solid;*/
 }
 
-/*h1 {
-    color: gray;
-  }
-
-
-h4 {
-    color: gray;
-  }*/
-
 li {
     list-style-type: square;
-/*     color: gray; */
-  }
+}
