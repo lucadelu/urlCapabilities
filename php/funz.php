@@ -63,9 +63,12 @@ function getRequestCapabilities($map){
     if ($meta["wms_onlineresource"] != null) {
 	$tipoServer="WMS";
 	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetCapabilities";
-    } else {
+    } elseif ($meta["wfs_onlineresource"] != null) {
 	$tipoServer="WFS";
 	$request=$meta["wfs_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wfs_server_version"]."&REQUEST=GetCapabilities";
+    } elseif ($meta["wcs_onlineresource"] != null) {
+	$tipoServer="WCS";
+	$request=$meta["wcs_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wcs_server_version"]."&REQUEST=GetCapabilities";
     }
     return $request;
 }
@@ -75,8 +78,10 @@ function getUrl($map){
     $meta=getMetadati($map);
     if ($meta["wms_onlineresource"] != null) {
 	return $meta["wms_onlineresource"];
-    } else {
+    } elseif ($meta["wfs_onlineresource"] != null) {
 	return $meta["wfs_onlineresource"];
+    } elseif ($meta["wcs_onlineresource"] != null) {
+	return $meta["wcs_onlineresource"];
     }
 }
 
