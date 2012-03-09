@@ -53,8 +53,7 @@ function getLayersName($map){
 #return the projection of the mapfile
 function getProiection($map){
     $proj=$map->getProjection();
-    $epsg=explode("=",$proj);
-    return $epsg[1];
+    return $proj;
 }
 
 #return getCapabilities query
@@ -89,7 +88,6 @@ function getUrl($map){
 function getMapAll($map){
     $meta=getMetadati($map);
     $names=getLayersName($map);
-    $proj=getProiection($map);
     $nLayers=$map->numlayers;
     if ($meta["wms_onlineresource"] != null) {
 	$tipoServer="WMS";
@@ -116,10 +114,10 @@ function getMapAll($map){
 function getMap($map,$nLayer){
     $meta=getMetadati($map);
     $names=getLayersName($map);
-    $proj=getProiection($map);
+    $extent=$map->extent;
     if ($meta["wms_onlineresource"] != null) {
 	$tipoServer="WMS";
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSGCODE&CRS=EPSGCODE&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
 	$tipoServer="WFS";
 	$request="";
