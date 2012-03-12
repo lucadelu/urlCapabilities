@@ -44,8 +44,8 @@ function getLayersName($map){
     $nLayers=$map->numlayers;
     $names=array();
     for ($i=0;$i<$nLayers;$i++){
-	$Layer= $map->getLayer($i);
-	$names[$i]=$Layer->name;
+        $Layer= $map->getLayer($i);
+        $names[$i]=$Layer->name;
     }
     return $names;
 }
@@ -54,6 +54,42 @@ function getLayersName($map){
 function getProiection($map){
     $proj=$map->getProjection();
     return $proj;
+}
+
+function match($what,$where) { 
+  $x=file_get_contents($where); 
+  $lines=explode("\n",$x);
+  for ($i=0;$i<count($lines);$i++){
+      $b=preg_match("/{$what}/",$lines[$i]);
+      if ($b != null){
+          break;
+      }
+  }
+  return $b; 
+}
+
+#return the epsg code to do getmap request
+function getEpsgCode($map){
+    $proj=getProiection($map);
+//     echo($proj);
+    $matches=strpos($proj,'epsg');
+    if ($matches != false){
+        $proj_array=explode(":", $proj);
+        $epsg=$proj_array[1];
+    } else {
+        $matches=strpos($proj,'EPSG');
+        if ($matches != false){
+            $proj_array=explode(":", $proj);
+            $epsg=$proj_array[1];
+        } else {
+//             var_dump(match($proj,'/usr/local/share/proj/epsg'));
+            $matches=exec("grep '".$proj."' /usr/local/share/proj/epsg");
+            $matches=explode(">", $matches);
+            $matches=$matches[0];
+            $epsg=str_replace('<', '', $matches);
+        }
+    }
+    return $epsg;
 }
 
 #return getCapabilities query
@@ -84,30 +120,14 @@ function getUrl($map){
     }
 }
 
-#return the map of first correct layer
+#return the getmap request for all layers
 function getMapAll($map){
-    $meta=getMetadati($map);
-    $names=getLayersName($map);
+    $requests=array();
     $nLayers=$map->numlayers;
-    if ($meta["wms_onlineresource"] != null) {
-	$tipoServer="WMS";
 	for ($i=0;$i<$nLayers;$i++) {
-		$req=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$i]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-		$ritorno=get_headers($req,1);
-		$type=explode("/", $ritorno['Content-Type']);
-		if ($type[0]=='image') {
-			$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$i]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-			break;
-		} else {
-		}
-	}
-    } else {
-	$tipoServer="WFS";
-	$request="";
-	#$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[0]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-
+       $requests[$i]=getMap($map,$i);
     }
-    return $request;
+    return $requests;
 }
 
 #return the map of the layer selected by a number. WARNING the layer number start from 0
@@ -115,9 +135,10 @@ function getMap($map,$nLayer){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $extent=$map->extent;
+    $proj=getEpsgCode($map);
     if ($meta["wms_onlineresource"] != null) {
-	$tipoServer="WMS";
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSGCODE&CRS=EPSGCODE&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $tipoServer="WMS";
+        $request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
 	$tipoServer="WFS";
 	$request="";

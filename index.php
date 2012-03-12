@@ -28,6 +28,7 @@ echo <<<EOD
 	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	      <title>Servizi OGC FEM/IASMA</title>
 	  <script type="text/javascript" src="javascript/funz.js"></script>
+      <script type="text/javascript" src="javascript/jquery-1.7.js"></script>	  
 	  </head>
  	  <body style="background-color:#FFFFFF">
 EOD;
@@ -49,8 +50,9 @@ for ($w=0;$w<count($mapfiles);$w++){
 		<ul id="multi">';
     #names of layers
     $nameLayers=getLayersName($mapfile);
+    $numberLayers=count($nameLayers);
     #show the layers name in a list
-    for ($i=0;$i<count($nameLayers);$i++){
+    for ($i=0;$i<$numberLayers;$i++){
 	echo "<li>".$nameLayers[$i]."</li>";
     }
     #create getCapabilities string
@@ -58,19 +60,34 @@ for ($w=0;$w<count($mapfiles);$w++){
     #create url string
     $url=getUrl($mapfile);
     #create map string, it use getMap for the first layer
-    $urlMappa=getMap($mapfile,0);
+    $n=rand(0,$numberLayers);
+    $urlMappa=getMap($mapfile,$n);
+    $urlsMappe=getMapAll($mapfile);
+    $urlsMappeJS=join("\", \"", $urlsMappe);
     #name for the id url
     #echo $urlMappa;
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '</ul>
 	       </div>
-	       <div class="right"><img src="'.$urlMappa.'" align="middle"></div>
+	       <div class="right"><img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].'</div>
+           <!--<script>
+                var urlsArray = ["'.$urlsMappeJS.'"];
+                var i, imgid, url;
+                maximage=urlsArray.length;
+                imgid=$("map'.$nomeMapFile.'")
+                for (i=1;i<maximage;i++){
+                    url=urlsArray[i];
+                    sleep(20000);
+                    imgid.attr("src",url) ;
+                    console.log(url,i);        
+                }
+           </script>-->       
 	       <div class="buttons">
-		<input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
-		<input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
+           <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
+           <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
 	       </div>
-             <div id="'.$nomeUrl.'" class="url"></div>
-	     <div class="separation"> </div>
+           <div id="'.$nomeUrl.'" class="url"></div>
+	       <div class="separation"> </div>
 	    </div>';
 }
 echo <<<EOD
