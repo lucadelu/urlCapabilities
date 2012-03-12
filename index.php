@@ -18,6 +18,7 @@ email                : lucadeluge@gmail.com
  ***************************************************************************/
 
 require_once 'php/funz.php';
+require_once "php/settings.php";
 
 echo <<<EOD
 
@@ -61,7 +62,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     $url=getUrl($mapfile);
     #create map string, it use getMap for the first layer
     $n=rand(0,$numberLayers);
-    $urlMappa=getMap($mapfile,$n);
+    $urlMappa=getMap($mapfile,$n,$epsg_path);
     $urlsMappe=getMapAll($mapfile);
     $urlsMappeJS=join("\", \"", $urlsMappe);
     #name for the id url

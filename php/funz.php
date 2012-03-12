@@ -82,8 +82,8 @@ function getEpsgCode($map){
             $proj_array=explode(":", $proj);
             $epsg=$proj_array[1];
         } else {
-//             var_dump(match($proj,'/usr/local/share/proj/epsg'));
-            $matches=exec("grep '".$proj."' /usr/local/share/proj/epsg");
+//             var_dump(match($proj,$epsgFile));
+            $matches=exec("grep '".$proj."' ".$epsgFile."");
             $matches=explode(">", $matches);
             $matches=$matches[0];
             $epsg=str_replace('<', '', $matches);
@@ -121,21 +121,21 @@ function getUrl($map){
 }
 
 #return the getmap request for all layers
-function getMapAll($map){
+function getMapAll($map,$epsgFile){
     $requests=array();
     $nLayers=$map->numlayers;
 	for ($i=0;$i<$nLayers;$i++) {
-       $requests[$i]=getMap($map,$i);
+       $requests[$i]=getMap($map,$i,$epsgFile);
     }
     return $requests;
 }
 
 #return the map of the layer selected by a number. WARNING the layer number start from 0
-function getMap($map,$nLayer){
+function getMap($map,$nLayer,$epsgFile){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $extent=$map->extent;
-    $proj=getEpsgCode($map);
+    $proj=getEpsgCode($map,$epsgFile,$epsgFile);
     if ($meta["wms_onlineresource"] != null) {
         $tipoServer="WMS";
         $request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
