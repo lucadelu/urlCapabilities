@@ -36,8 +36,8 @@ div.right {
 div.buttons {
     position:relative;
     width:20%;
-    top:10px;
-    height:40px;
+    top:25px;
+    height:70px;
     float:left;
 }
 
@@ -45,8 +45,8 @@ div.buttons {
 div.url {
     position:relative;
     left:2%;
-    top:10px;
-    height:40px;
+    top:25px;
+    height:70px;
     float:left;
     width:79%;
 
@@ -54,7 +54,7 @@ div.url {
 
 div.separation {
     position:relative;
-    top:5px;
+    height:50px;
     width:100%;
 /*    border-bottom-width:1px;
     border-bottom-color:black;
