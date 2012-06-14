@@ -34,8 +34,10 @@ function getMetadati($map){
     $hashTable = $web->metadata;
     $key = null;
     $metadati=array();
-    while ($key = $hashTable->nextkey($key))
-	$metadati[$key]=$hashTable->get($key);
+    if (count($hashTable) != 0){
+        while ($key = $hashTable->nextkey($key))
+	    $metadati[$key]=$hashTable->get($key);
+    }
     return $metadati;
 }
 
@@ -69,9 +71,8 @@ function match($what,$where) {
 }
 
 #return the epsg code to do getmap request
-function getEpsgCode($map){
+function getEpsgCode($map,$epsgFile){
     $proj=getProiection($map);
-//     echo($proj);
     $matches=strpos($proj,'epsg');
     if ($matches != false){
         $proj_array=explode(":", $proj);
@@ -82,7 +83,6 @@ function getEpsgCode($map){
             $proj_array=explode(":", $proj);
             $epsg=$proj_array[1];
         } else {
-//             var_dump(match($proj,$epsgFile));
             $matches=exec("grep '".$proj."' ".$epsgFile."");
             $matches=explode(">", $matches);
             $matches=$matches[0];
@@ -135,7 +135,7 @@ function getMap($map,$nLayer,$epsgFile){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $extent=$map->extent;
-    $proj=getEpsgCode($map,$epsgFile,$epsgFile);
+    $proj=getEpsgCode($map,$epsgFile);
     if ($meta["wms_onlineresource"] != null) {
         $tipoServer="WMS";
         $request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
