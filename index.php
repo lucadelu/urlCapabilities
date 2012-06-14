@@ -63,7 +63,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     #create map string, it use getMap for the first layer
     $n=rand(0,$numberLayers);
     $urlMappa=getMap($mapfile,$n,$epsg_path);
-    $urlsMappe=getMapAll($mapfile);
+    $urlsMappe=getMapAll($mapfile,$epsg_path);
     $urlsMappeJS=join("\", \"", $urlsMappe);
     #name for the id url
     #echo $urlMappa;
@@ -84,10 +84,10 @@ for ($w=0;$w<count($mapfiles);$w++){
                 }
            </script>-->       
 	       <div class="buttons">
-           <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
-           <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
+           	 <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
+           	 <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
 	       </div>
-           <div id="'.$nomeUrl.'" class="url"></div>
+               <div id="'.$nomeUrl.'" class="url"></div>
 	       <div class="separation"> </div>
 	    </div>';
 }
