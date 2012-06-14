@@ -13,7 +13,7 @@ email                : lucadeluge@gmail.com
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License.	   *
+ *   the Free Software Foundation; either version 2 of the License.        *
  *                                                                         *
  ***************************************************************************/
 
@@ -22,16 +22,16 @@ require_once "php/settings.php";
 
 echo <<<EOD
 
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
-	  <link rel="stylesheet" type="text/css" href="css/gray.css">
-	  <head>
-	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	      <title>Servizi OGC FEM/IASMA</title>
-	  <script type="text/javascript" src="javascript/funz.js"></script>
-      <script type="text/javascript" src="javascript/jquery-1.7.js"></script>	  
-	  </head>
- 	  <body style="background-color:#FFFFFF">
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <link rel="stylesheet" type="text/css" href="css/gray.css">
+      <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+          <title>Servizi OGC FEM/IASMA</title>
+      <script type="text/javascript" src="javascript/funz.js"></script>
+      <script type="text/javascript" src="javascript/jquery-1.7.js"></script>
+      </head>
+       <body style="background-color:#FFFFFF">
 EOD;
 # change $path if you want show the mapfile inside another path
 $path="mapfile/";
@@ -47,31 +47,31 @@ for ($w=0;$w<count($mapfiles);$w++){
     $contUrl="cont".str_replace(" ","",$nomeMapFile);
 
     echo '    <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
-		<div class="left"><h4><u>Layers:</u></h4>
-		<ul id="multi">';
+        <div class="left"><h4><u>Layers:</u></h4>
+        <ul id="multi">';
     #names of layers
     $nameLayers=getLayersName($mapfile);
     $numberLayers=count($nameLayers);
     #show the layers name in a list
     for ($i=0;$i<$numberLayers;$i++){
-	echo "<li>".$nameLayers[$i]."</li>";
+        echo "<li>".$nameLayers[$i]."</li>";
     }
     #create getCapabilities string
     $richiesta=getRequestCapabilities($mapfile);
     #create url string
     $url=getUrl($mapfile);
     #create map string, it use getMap for the first layer
-    $n=rand(0,$numberLayers);
+    $n=rand(0,$numberLayers-1);
     $urlMappa=getMap($mapfile,$n,$epsg_path);
-    $urlsMappe=getMapAll($mapfile,$epsg_path);
-    $urlsMappeJS=join("\", \"", $urlsMappe);
+//     $urlsMappe=getMapAll($mapfile,$epsg_path);
+//     $urlsMappeJS=join("\", \"", $urlsMappe);
     #name for the id url
     #echo $urlMappa;
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '</ul>
-	       </div>
-	       <div class="right"><img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].'</div>
-           <!--<script>
+          </div>
+          <div class="right"><img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].'</div>
+          <!--<script>
                 var urlsArray = ["'.$urlsMappeJS.'"];
                 var i, imgid, url;
                 maximage=urlsArray.length;
@@ -82,18 +82,18 @@ for ($w=0;$w<count($mapfiles);$w++){
                     imgid.attr("src",url) ;
                     console.log(url,i);        
                 }
-           </script>-->       
-	       <div class="buttons">
-           	 <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
-           	 <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
-	       </div>
-               <div id="'.$nomeUrl.'" class="url"></div>
-	       <div class="separation"> </div>
-	    </div>';
+          </script>-->
+          <div class="buttons">
+               <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
+               <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
+          </div>
+          <div id="'.$nomeUrl.'" class="url"></div>
+          <div class="separation"> </div>
+        </div>';
 }
 echo <<<EOD
-	  </body>
-	</html>
+      </body>
+    </html>
 EOD;
 
 ?>

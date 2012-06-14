@@ -13,7 +13,7 @@ email                : lucadeluge@gmail.com
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License.	   *
+ *   the Free Software Foundation; either version 2 of the License.        *
  *                                                                         *
  ***************************************************************************/
 
@@ -22,8 +22,8 @@ function getMapfiles($path){
     $mapfiles=array();
     $x=0;
     foreach (glob("$path*.map") as $NAME) {
-	$mapfiles[$x]=$NAME;
-	$x++;
+        $mapfiles[$x]=$NAME;
+        $x++;
     }
     return $mapfiles;
 }
@@ -35,8 +35,9 @@ function getMetadati($map){
     $key = null;
     $metadati=array();
     if (count($hashTable) != 0){
-        while ($key = $hashTable->nextkey($key))
-	    $metadati[$key]=$hashTable->get($key);
+        while ($key = $hashTable->nextkey($key)){
+            $metadati[$key]=$hashTable->get($key);
+        }
     }
     return $metadati;
 }
@@ -96,15 +97,37 @@ function getEpsgCode($map,$epsgFile){
 function getRequestCapabilities($map){
     $meta=getMetadati($map);
     if ($meta["wms_onlineresource"] != null) {
-	$tipoServer="WMS";
-	$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetCapabilities";
+    $tipoServer="WMS";
+    $url=$meta["wms_onlineresource"];
+        if ($meta["wms_server_version"]){
+            $version=$meta["wms_server_version"];
+        } elseif ($meta["wms_getcapabilities_version"]) {
+            $version=$meta["wms_getcapabilities_version"];
+        } else {
+            return "error";
+        }
     } elseif ($meta["wfs_onlineresource"] != null) {
-	$tipoServer="WFS";
-	$request=$meta["wfs_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wfs_server_version"]."&REQUEST=GetCapabilities";
+        $tipoServer="WFS";
+        $url=$meta["wfs_onlineresource"];
+        if ($meta["wfs_server_version"]){
+            $version=$meta["wfs_server_version"];
+        } elseif ($meta["wfs_getcapabilities_version"]) {
+            $version=$meta["wfs_getcapabilities_version"];
+        } else {
+            return "error";
+        }
     } elseif ($meta["wcs_onlineresource"] != null) {
-	$tipoServer="WCS";
-	$request=$meta["wcs_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wcs_server_version"]."&REQUEST=GetCapabilities";
+        $tipoServer="WCS";
+        $url=$meta["wcs_onlineresource"];
+        if ($meta["wcs_server_version"]){
+            $version=$meta["wcs_server_version"];
+        } elseif ($meta["wcs_getcapabilities_version"]) {
+            $version=$meta["wcs_getcapabilities_version"];
+        } else {
+            return "error";
+        }
     }
+    $request=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetCapabilities";
     return $request;
 }
 
@@ -112,11 +135,11 @@ function getRequestCapabilities($map){
 function getUrl($map){
     $meta=getMetadati($map);
     if ($meta["wms_onlineresource"] != null) {
-	return $meta["wms_onlineresource"];
+        return $meta["wms_onlineresource"];
     } elseif ($meta["wfs_onlineresource"] != null) {
-	return $meta["wfs_onlineresource"];
+        return $meta["wfs_onlineresource"];
     } elseif ($meta["wcs_onlineresource"] != null) {
-	return $meta["wcs_onlineresource"];
+        return $meta["wcs_onlineresource"];
     }
 }
 
@@ -124,7 +147,7 @@ function getUrl($map){
 function getMapAll($map,$epsgFile){
     $requests=array();
     $nLayers=$map->numlayers;
-	for ($i=0;$i<$nLayers;$i++) {
+    for ($i=0;$i<$nLayers;$i++) {
        $requests[$i]=getMap($map,$i,$epsgFile);
     }
     return $requests;
@@ -140,10 +163,14 @@ function getMap($map,$nLayer,$epsgFile){
         $tipoServer="WMS";
         $request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
-	$tipoServer="WFS";
-	$request="";
-	#$request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=".$proj."&BBOX=612485,5059500,730100,5157100&WIDTH=400&HEIGHT=300&FORMAT=image/png";
-
+        foreach ($names as $NAME) {
+            $layer = $map->getLayerByName($NAME);
+            $layer->set('status', MS_OFF);
+        }
+        $layer = $map->getLayerByName($names[$nLayer]);
+        $layer->set('status', MS_ON);
+        $image=$map->draw();
+        $request=$image->saveWebImage();
     }
     return $request;
 }
