@@ -84,10 +84,25 @@ function getEpsgCode($map,$epsgFile){
             $proj_array=explode(":", $proj);
             $epsg=$proj_array[1];
         } else {
-            $matches=exec("grep '".$proj."' ".$epsgFile."");
-            $matches=explode(">", $matches);
-            $matches=$matches[0];
-            $epsg=str_replace('<', '', $matches);
+            $proj_array=explode(" ", $proj);
+            $lines = file($epsgFile);
+            foreach($lines as $line) {
+	       $exists = true;
+	       foreach($proj_array as $pr){
+	         if (strpos($line,$pr) == false){
+		   $exists = false;
+		   break;
+	         }
+	       }
+	       if ($exists == false){
+	         continue;
+	       } else {
+	         $matches=explode(">", $line);
+		 $matches=$matches[0];
+                 $epsg=str_replace('<', '', $matches);
+                 break;
+	       }
+            }
         }
     }
     return $epsg;
@@ -96,9 +111,19 @@ function getEpsgCode($map,$epsgFile){
 #return getCapabilities query
 function getRequestCapabilities($map){
     $meta=getMetadati($map);
-    if ($meta["wms_onlineresource"] != null) {
-    $tipoServer="WMS";
-    $url=$meta["wms_onlineresource"];
+    if (array_key_exists("ows_onlineresource",$meta)) {
+        $tipoServer="WMS";
+        $url=cleanUrl($meta["ows_onlineresource"]);
+        if ($meta["ows_server_version"]){
+            $version=$meta["ows_server_version"];
+        } elseif ($meta["ows_getcapabilities_version"]) {
+            $version=$meta["ows_getcapabilities_version"];
+        } else {
+            return "error";
+        }
+    } elseif (array_key_exists("wms_onlineresource",$meta)) {
+        $tipoServer="WMS";
+        $url=cleanUrl($meta["wms_onlineresource"]);
         if ($meta["wms_server_version"]){
             $version=$meta["wms_server_version"];
         } elseif ($meta["wms_getcapabilities_version"]) {
@@ -106,9 +131,9 @@ function getRequestCapabilities($map){
         } else {
             return "error";
         }
-    } elseif ($meta["wfs_onlineresource"] != null) {
+    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
         $tipoServer="WFS";
-        $url=$meta["wfs_onlineresource"];
+        $url=cleanUrl($meta["wfs_onlineresource"]);
         if ($meta["wfs_server_version"]){
             $version=$meta["wfs_server_version"];
         } elseif ($meta["wfs_getcapabilities_version"]) {
@@ -116,9 +141,9 @@ function getRequestCapabilities($map){
         } else {
             return "error";
         }
-    } elseif ($meta["wcs_onlineresource"] != null) {
+    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
         $tipoServer="WCS";
-        $url=$meta["wcs_onlineresource"];
+        $url=cleanUrl($meta["wcs_onlineresource"]);
         if ($meta["wcs_server_version"]){
             $version=$meta["wcs_server_version"];
         } elseif ($meta["wcs_getcapabilities_version"]) {
@@ -134,12 +159,31 @@ function getRequestCapabilities($map){
 #return url of the web service
 function getUrl($map){
     $meta=getMetadati($map);
-    if ($meta["wms_onlineresource"] != null) {
+    if (array_key_exists("ows_onlineresource",$meta)) {
+        return $meta["ows_onlineresource"];
+    } elseif (array_key_exists("wms_onlineresource",$meta)) {
         return $meta["wms_onlineresource"];
-    } elseif ($meta["wfs_onlineresource"] != null) {
+    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
         return $meta["wfs_onlineresource"];
-    } elseif ($meta["wcs_onlineresource"] != null) {
+    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
         return $meta["wcs_onlineresource"];
+    }
+}
+
+#clean the url of the web service for a good getmap request
+function cleanUrl($url){
+    if (strpos($url,'?map=') or strpos($url,'?MAP=')){
+        if (substr($url, -1) == '&'){
+	    return $url;
+        } else {
+	    return $url.'&';
+        }
+    } else {
+        if (substr($url, -1) == '?'){
+	    return $url;
+        } else {
+	    return $url.'?';
+        }
     }
 }
 
@@ -159,9 +203,12 @@ function getMap($map,$nLayer,$epsgFile){
     $names=getLayersName($map);
     $extent=$map->extent;
     $proj=getEpsgCode($map,$epsgFile);
-    if ($meta["wms_onlineresource"] != null) {
+    if (array_key_exists("wms_onlineresource",$meta)) {
         $tipoServer="WMS";
-        $request=$meta["wms_onlineresource"]."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+    } elseif (array_key_exists("ows_onlineresource",$meta)) {
+        $tipoServer="WMS";
+        $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$meta["ows_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
         foreach ($names as $NAME) {
             $layer = $map->getLayerByName($NAME);
