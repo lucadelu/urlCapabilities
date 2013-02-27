@@ -37,6 +37,7 @@ EOD;
 $path="mapfile/";
 # return all the mapfiles inside the path 
 $mapfiles=getMapfiles($path);
+var_dump($mapfiles);
 # for each mapfile
 for ($w=0;$w<count($mapfiles);$w++){
     #create a new mapfile object
@@ -63,8 +64,13 @@ for ($w=0;$w<count($mapfiles);$w++){
     #create map string, it use getMap for the first layer
     $n=rand(0,$numberLayers-1);
     $urlMappa=getMap($mapfile,$n,$epsg_path);
-//     $urlsMappe=getMapAll($mapfile,$epsg_path);
-//     $urlsMappeJS=join("\", \"", $urlsMappe);
+    #####################
+    # TODO
+    # add function to rotate images
+    # decommented for error in log file
+    $urlsMappe=getMapAll($mapfile,$epsg_path);
+    $urlsMappeJS=join("\", \"", $urlsMappe);
+    ############################
     #name for the id url
     #echo $urlMappa;
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
