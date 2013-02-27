@@ -1,11 +1,22 @@
-WARNING you need apache2, php5 and php5-mapscript installed on your system to use urlCapabilities.
+== PREREQUISITES ==
+You need apache2, php5 and php5-mapscript installed on your system to use urlCapabilities.
 
+== HOW TO INSTALL ==
 * Download the source with "git clone git://github.com/lucadelu/urlCapabilities.git" or with the button "Download Source" at http://github.com/lucadelu/urlCapabilities
 * Copy the urlCapabilities folder in your web server directory; in debian like distributions is /var/www 
-* Copy your mapfile/s to urlCapabilities/mapfile/
+* Set the path to epsg file (usually /usr/share/proj or /usr/local/share/proj )
+* Copy or link your mapfile/s to urlCapabilities/mapfile/
 * Now you can see the page using a web browser at the address http://localhost/urlCapabilities
 
 You can change the page aspect choosing a different css file inside the css folder or creating a new file
 
 That's all enjoy.
+
+== MAPFILE SETTINGS ==
+These values are required for urlCapabilities
+-MAP object:
+ * NAME
+-WEB object:
+ * wms_onlineresource OR wfs_onlineresource OR wcs_onlineresource
+ * wms_server_version/wms_getcapabilities_version OR wfs_server_version/wfs_getcapabilities_version OR wcs_server_version/wcs_getcapabilities_version
 
