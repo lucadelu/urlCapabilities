@@ -217,6 +217,9 @@ function getMap($map,$nLayer,$epsgFile){
         $layer = $map->getLayerByName($names[$nLayer]);
         $layer->set('status', MS_ON);
         $image=$map->draw();
+        if(!file_exists($image->imagepath)){
+	    mkdir($image->imagepath))
+        }
         $request=$image->saveWebImage();
     }
     return $request;
