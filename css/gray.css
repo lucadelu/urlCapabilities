@@ -18,6 +18,7 @@ div.left {
     width:40%;
     height:300px;
     float:left;
+    overflow:auto;
     border-right-width:1px;
     border-right-color:black;
     border-right-style:solid;
