@@ -3,10 +3,9 @@
 the core of urlCapabilities, it create and show the page with url, the map 
 and getCapabilities
 
-                             -------------------
-begin                : 2010-01-03 
+begin                : 2010-01-03
 copyright            : (C) 2009 by luca delucchi
-email                : lucadeluge@gmail.com 
+email                : lucadeluge@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -37,7 +36,6 @@ EOD;
 $path="mapfile/";
 # return all the mapfiles inside the path 
 $mapfiles=getMapfiles($path);
-var_dump($mapfiles);
 # for each mapfile
 for ($w=0;$w<count($mapfiles);$w++){
     #create a new mapfile object
@@ -77,18 +75,6 @@ for ($w=0;$w<count($mapfiles);$w++){
     echo '</ul>
           </div>
           <div class="right"><img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].'</div>
-          <!--<script>
-                var urlsArray = ["'.$urlsMappeJS.'"];
-                var i, imgid, url;
-                maximage=urlsArray.length;
-                imgid=$("map'.$nomeMapFile.'")
-                for (i=1;i<maximage;i++){
-                    url=urlsArray[i];
-                    sleep(20000);
-                    imgid.attr("src",url) ;
-                    console.log(url,i);        
-                }
-          </script>-->
           <div class="buttons">
                <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
                <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
