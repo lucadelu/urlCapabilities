@@ -84,6 +84,7 @@ for ($w=0;$w<count($mapfiles);$w++){
         </div>';
 }
 echo <<<EOD
+	<div id="footer">Powered by <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></div>
       </body>
     </html>
 EOD;

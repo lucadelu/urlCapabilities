@@ -77,6 +77,16 @@ ul#multi li {
     	border-bottom:1px dotted #FFFFFF
 } 
 
+#footer {
+    width: 100%;
+    height: 30px;
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+}
+
 /*div.separation {
     position:relative;
     top:5px;
