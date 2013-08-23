@@ -87,6 +87,10 @@ ul#multi li {
     text-align: center;
 }
 
+ul#multi li.selected {
+    font-weight:bold;
+}
+
 /*div.separation {
     position:relative;
     top:5px;

@@ -75,3 +75,7 @@ div.separation {
 li {
     list-style-type: square;
 }
+
+ul#multi li.selected {
+    font-weight:bold;
+}
