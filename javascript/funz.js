@@ -16,7 +16,7 @@ email                : lucadeluge@gmail.com
 
 // open the getCapabilities query
 function getCapabilities(web){
-    location.href=web;
+    window.open(web, '_blank');
 }
 
 // show/hide the url
