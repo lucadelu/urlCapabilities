@@ -20,5 +20,7 @@ email                : lucadeluge@gmail.com
 # Set here the path to epsg file. If you install proj from packages probably you can
 # find it in /usr/share/proj/epsg.
 $epsg_path='';
- 
+
+# change $path if you want show the mapfile inside another path
+$path="mapfile/";
 ?>
