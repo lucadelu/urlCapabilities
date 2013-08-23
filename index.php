@@ -55,13 +55,9 @@ require_once "php/settings.php";
 	  };
 
 	  $spinner.each(function(i,el){
-	      // console.debug(el);
 	      var spinner = new Spinner(spinneropts).spin(el);
 	      $(el).hide();
 	  })
-
-  //400:300 = 480:360
-
 
 	  $lis.click(function(){
 
@@ -76,7 +72,6 @@ require_once "php/settings.php";
 	      var layer = $this.addClass('selected').text();
 
 	      var url = $this.data('image');
-	      //var url = baseurl+'?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS='+layer+'&STYLES=&SRS=EPSG:3857&CRS=EPSG:3857&BBOX=1813286.53,5827067.74,2037363.578,5963524.294&WIDTH=400&HEIGHT=300&FORMAT=image/png'
 	      $box.find('.layername').html(layer+' - <span>Loading...</span>');
 
 	      $map.attr('src',url).load(function(){
@@ -110,15 +105,15 @@ for ($w=0;$w<count($mapfiles);$w++){
     #names of layers
     $nameLayers=getLayersName($mapfile);
     $numberLayers=count($nameLayers);
-     $torder = array();
-     #show the layers name in a list
-     for ($i=0;$i<$numberLayers;$i++){
-         $thismap=getMap($mapfile,$i,$epsg_path);
-         $torder[$nameLayers[$i]] = "<li data-image=\"$thismap\">".$nameLayers[$i]."</li>";
-     }
+    $torder = array();
+    #show the layers name in an order list
+    for ($i=0;$i<$numberLayers;$i++){
+        $thismap=getMap($mapfile,$i,$epsg_path);
+        $torder[$nameLayers[$i]] = "<li data-image=\"$thismap\">".$nameLayers[$i]."</li>";
+    }
 
-     uksort( $torder, 'strnatcmp');
-     echo implode("\r\n", $torder);
+    uksort( $torder, 'strnatcmp');
+    echo implode("\r\n", $torder);
 
     #create getCapabilities string
     $richiesta=getRequestCapabilities($mapfile);
@@ -126,7 +121,6 @@ for ($w=0;$w<count($mapfiles);$w++){
     $url=getUrl($mapfile);
 
     #name for the id url
-    #echo $urlMappa;
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '</ul>
           </div>
@@ -144,6 +138,6 @@ for ($w=0;$w<count($mapfiles);$w++){
         </div>';
 }
 ?>
-	<div id="footer">Powered by <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></div>
-      </body>
-    </html>
+    <div id="footer">Powered by <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></div>
+  </body>
+</html>
