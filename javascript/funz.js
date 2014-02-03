@@ -1,8 +1,7 @@
 /***************************************************************************
 Javascript functions for index.php
 
-                             -------------------
-begin                : 2010-01-03 
+begin                : 2010-01-03
 copyright            : (C) 2009 by luca delucchi
 email                : lucadeluge@gmail.com 
  ***************************************************************************/
@@ -17,7 +16,7 @@ email                : lucadeluge@gmail.com
 
 // open the getCapabilities query
 function getCapabilities(web){
-    location.href=web;
+    window.open(web, '_blank');
 }
 
 // show/hide the url
@@ -27,13 +26,5 @@ function getUrl(url,id){
         e.innerHTML = url;
     } else {
         e.innerHTML = '';
-    }
-}
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-        break;
-        }
     }
 }

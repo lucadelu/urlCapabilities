@@ -22,8 +22,10 @@ function getMapfiles($path){
     $mapfiles=array();
     $x=0;
     foreach (glob("$path*.map") as $NAME) {
-        $mapfiles[$x]=$NAME;
-        $x++;
+        if (strpos($NAME,'landsat_urlcapabilities.map') == false) {
+	  $mapfiles[$x]=$NAME;
+	  $x++;
+        }
     }
     return $mapfiles;
 }
