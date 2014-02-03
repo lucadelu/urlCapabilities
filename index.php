@@ -37,7 +37,6 @@ EOD;
 $path="mapfile/";
 # return all the mapfiles inside the path 
 $mapfiles=getMapfiles($path);
-var_dump($mapfiles);
 # for each mapfile
 for ($w=0;$w<count($mapfiles);$w++){
     #create a new mapfile object
@@ -55,7 +54,8 @@ for ($w=0;$w<count($mapfiles);$w++){
     $numberLayers=count($nameLayers);
     #show the layers name in a list
     for ($i=0;$i<$numberLayers;$i++){
-        echo "<li>".$nameLayers[$i]."</li>";
+	$descr=describeLayer($mapfile, $nameLayers[$i]);
+        echo '<li><a target="_blank" href="'.$descr.'">'.$nameLayers[$i].'</a></li>';
     }
     #create getCapabilities string
     $richiesta=getRequestCapabilities($mapfile);

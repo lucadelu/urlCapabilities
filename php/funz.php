@@ -108,50 +108,48 @@ function getEpsgCode($map,$epsgFile){
     return $epsg;
 }
 
+function getVersion($meta){
+    if (array_key_exists("wms_server_version",$meta)) {
+        $version=$meta["wms_server_version"];
+    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
+	$version=$meta["wfs_server_version"];
+    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
+	$version=$meta["wcs_server_version"];
+    } elseif (array_key_exists("ows_onlineresource",$meta)) {
+	$version=$meta["ows_server_version"];
+    } elseif (array_key_exists("wms_getcapabilities_version",$meta)) {
+            $version=$meta["wms_getcapabilities_version"];
+    } elseif (array_key_exists("wfs_getcapabilities_version",$meta)) {
+            $version=$meta["wms_getcapabilities_version"];
+    } elseif (array_key_exists("wcs_getcapabilities_version",$meta)) {
+            $version=$meta["wms_getcapabilities_version"];
+    } elseif (array_key_exists("ows_getcapabilities_version",$meta)) {
+            $version=$meta["wms_getcapabilities_version"];
+    } else {
+	$version='1.0.0';
+    }
+    return $version;
+}
+
+function getService($meta){
+    if (array_key_exists("ows_onlineresource",$meta)) {
+        $tipoServer="WMS";
+    } elseif (array_key_exists("wms_onlineresource",$meta)) {
+        $tipoServer="WMS";
+    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
+        $tipoServer="WFS";
+    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
+        $tipoServer="WCS";
+    }
+    return $tipoServer;
+}
+
 #return getCapabilities query
 function getRequestCapabilities($map){
     $meta=getMetadati($map);
-    if (array_key_exists("ows_onlineresource",$meta)) {
-        $tipoServer="WMS";
-        $url=cleanUrl($meta["ows_onlineresource"]);
-        if ($meta["ows_server_version"]){
-            $version=$meta["ows_server_version"];
-        } elseif ($meta["ows_getcapabilities_version"]) {
-            $version=$meta["ows_getcapabilities_version"];
-        } else {
-            return "error";
-        }
-    } elseif (array_key_exists("wms_onlineresource",$meta)) {
-        $tipoServer="WMS";
-        $url=cleanUrl($meta["wms_onlineresource"]);
-        if ($meta["wms_server_version"]){
-            $version=$meta["wms_server_version"];
-        } elseif ($meta["wms_getcapabilities_version"]) {
-            $version=$meta["wms_getcapabilities_version"];
-        } else {
-            return "error";
-        }
-    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
-        $tipoServer="WFS";
-        $url=cleanUrl($meta["wfs_onlineresource"]);
-        if ($meta["wfs_server_version"]){
-            $version=$meta["wfs_server_version"];
-        } elseif ($meta["wfs_getcapabilities_version"]) {
-            $version=$meta["wfs_getcapabilities_version"];
-        } else {
-            return "error";
-        }
-    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
-        $tipoServer="WCS";
-        $url=cleanUrl($meta["wcs_onlineresource"]);
-        if ($meta["wcs_server_version"]){
-            $version=$meta["wcs_server_version"];
-        } elseif ($meta["wcs_getcapabilities_version"]) {
-            $version=$meta["wcs_getcapabilities_version"];
-        } else {
-            return "error";
-        }
-    }
+    $tipoServer=getService($meta);
+    $version=getVersion($meta);
+    $url=getUrl($map);
     $request=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetCapabilities";
     return $request;
 }
@@ -197,18 +195,42 @@ function getMapAll($map,$epsgFile){
     return $requests;
 }
 
+function describeLayer($map,$layername){
+    $meta=getMetadati($map);
+    $tipoServer=getService($meta);
+    $version=getVersion($meta);
+    $url=getUrl($map);
+    if ($tipoServer == 'WMS'){
+	$request="DescribeLayer";
+	$par="LAYERS";
+    } elseif ($tipoServer == 'WFS') {
+	$request="DescribeFeatureType";
+	$par="TYPENAME";
+    } elseif ($tipoServer == 'WCS') {
+	$request="DescribeCoverage";
+	$par="COVERAGE";
+    }
+    if (($tipoServer == 'WMS') and ($version == '1.3.0')){
+	$req=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=".$request."&".$par."=".$layername."&SLD_VERSION=1.1.0";
+    } else {
+	$req=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=".$request."&".$par."=".$layername;
+    }
+    return $req;
+}
+
 #return the map of the layer selected by a number. WARNING the layer number start from 0
 function getMap($map,$nLayer,$epsgFile){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $extent=$map->extent;
     $proj=getEpsgCode($map,$epsgFile);
+    $version=getVersion($meta);
     if (array_key_exists("wms_onlineresource",$meta)) {
         $tipoServer="WMS";
-        $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$meta["wms_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } elseif (array_key_exists("ows_onlineresource",$meta)) {
         $tipoServer="WMS";
-        $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$meta["ows_server_version"]."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
         foreach ($names as $NAME) {
             $layer = $map->getLayerByName($NAME);
