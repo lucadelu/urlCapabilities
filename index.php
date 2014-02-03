@@ -85,9 +85,9 @@ require_once "php/settings.php";
 	});
       </script>
       </head>
-       <body style="background-color:#FFFFFF">
+      <body style="background-color:#FFFFFF">
 
-<?
+<?php
 # return all the mapfiles inside the path
 $mapfiles=getMapfiles($path);
 # for each mapfile
@@ -99,9 +99,11 @@ for ($w=0;$w<count($mapfiles);$w++){
     #name for the id container
     $contUrl="cont".str_replace(" ","",$nomeMapFile);
 
-    echo '    <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
-        <div class="left"><h4><u>Layers:</u></h4>
-        <ul id="multi">';
+    echo '     <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
+        <div class="left">
+           <h4><u>Layers:</u></h4>
+           <ul id="multi">
+           ';
     #names of layers
     $nameLayers=getLayersName($mapfile);
     $numberLayers=count($nameLayers);
@@ -110,7 +112,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     for ($i=0;$i<$numberLayers;$i++){
 	$descr=describeLayer($mapfile, $nameLayers[$i]);
         $thismap=getMap($mapfile,$i,$epsg_path);
-        $torder[$nameLayers[$i]] = "<li data-image=\"$thismap\"><a target=\"_blank\" href=\"'.$descr.'\">".$nameLayers[$i]."</a></li>";
+        $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\"><a target=\"_blank\" href=\"$descr\">".$nameLayers[$i]."</a></li>";
     }
 
     uksort( $torder, 'strnatcmp');
@@ -123,20 +125,21 @@ for ($w=0;$w<count($mapfiles);$w++){
 
     #name for the id url
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
-    echo '</ul>
-          </div>
-          <div class="right">
-               <div class="loader"></div>
-               <img src="" class="map"><br />Layer: <span class="layername"></span>
-               <!-- <img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].' -->
-          </div>
-          <div class="buttons">
-               <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
-               <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
-          </div>
-          <div id="'.$nomeUrl.'" class="url"></div>
-          <div class="separation"> </div>
-        </div>';
+    echo '
+           </ul>
+        </div>
+        <div class="right">
+             <div class="loader"></div>
+             <img src="" class="map"><br />Layer: <span class="layername"></span>
+             <!-- <img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].' -->
+        </div>
+        <div class="buttons">
+             <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
+             <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
+        </div>
+        <div id="'.$nomeUrl.'" class="url"></div>
+        <div class="separation"> </div>
+      </div>';
 }
 ?>
     <div id="footer">Powered by <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></div>
