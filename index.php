@@ -63,9 +63,9 @@ require_once "php/settings.php";
 
 	      var $this = $(this);
 	      var $box = $this.parent().parent().parent();
+	      console.log($box)
 	      var $map = $box.find('.map');
 	      var offset = $map.parent().offset();
-
 	      $box.find('.loader')/*.css({left:(offset.left+150)+'px', top:(offset.top+200)+'px'})*/.show();
 
 	      $box.find('li.selected').removeClass('selected');
@@ -83,12 +83,13 @@ require_once "php/settings.php";
 	        } else {
 		  $box.find('.layername').text(layer);
 		  $box.find('.loader').hide();
-		  $descr=$box.find('.descrL');
-		  $descr.attr('value', 'Describe layer ' + layer);
-		  $descr.attr('onclick', desc);
+ 		  $button=$box.find('.buttons');
+ 		  if ($button.hasClass("descrLayer") == true){
+		      $box.find('.descrLayer').remove()
+ 		  }
+ 		  $button.append('<input type="button" value="Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc + '") class="descrLayer">');
 		}
 	      });
-
 	  });
 
 	  $('ul#multi>li:first-child').trigger('click');
@@ -141,10 +142,9 @@ for ($w=0;$w<count($mapfiles);$w++){
         <div class="right">
              <div class="loader"></div>
              <img src="" class="map"><br />Layer: <span class="layername"></span>
-             <input type="button" value="" target="_blank" onclick="" class="descrL">
         </div>
         <div class="buttons">
-             <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
+             <input type="button" value="getCapabilities" target="_blank" onclick=openUrl("'.$richiesta.'");>
              <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
         </div>
         <div id="'.$nomeUrl.'" class="url"></div>
