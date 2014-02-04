@@ -31,7 +31,6 @@ div.right {
     height:300px;
     float:left;
     width:59%;
-
 }
 
 div.buttons {
@@ -45,11 +44,11 @@ div.buttons {
 
 div.url {
     position:relative;
-    left:2%;
+    left:40%;
     top:25px;
     height:70px;
     float:left;
-    width:79%;
+    width:59%;
 
 }
 

@@ -63,7 +63,6 @@ require_once "php/settings.php";
 
 	      var $this = $(this);
 	      var $box = $this.parent().parent().parent();
-	      console.log($box)
 	      var $map = $box.find('.map');
 	      var offset = $map.parent().offset();
 	      $box.find('.loader')/*.css({left:(offset.left+150)+'px', top:(offset.top+200)+'px'})*/.show();
@@ -76,7 +75,6 @@ require_once "php/settings.php";
 	      $box.find('.layername').html(layer+' - <span>Loading...</span>');
 
 	      $map.attr('src',url).load([], function(response, status, xhr){
-	        console.log(status);
 	        if ( status == "error" ) {
 		  $box.find('.layername').text("Problem loading layer " + layer)
 		  $box.find('.loader').hide();
@@ -84,7 +82,7 @@ require_once "php/settings.php";
 		  $box.find('.layername').text(layer);
 		  $box.find('.loader').hide();
  		  $button=$box.find('.buttons');
- 		  if ($button.hasClass("descrLayer") == true){
+ 		  if ($button.find(".descrLayer").length != 0){
 		      $box.find('.descrLayer').remove()
  		  }
  		  $button.append('<input type="button" value="Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc + '") class="descrLayer">');
