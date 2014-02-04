@@ -52,13 +52,13 @@ div.url {
 
 }
 
-table#multi,table#multi tr {
+ul#multi,ul#multi li {
 	margin:0;
 	padding:0;
 	list-style:none
 }
 
-table#multi {
+ul#multi {
 	width: 100%;
 	overflow: hidden;
 /*    	padding: 1em 0;
@@ -69,7 +69,7 @@ table#multi {
 	color: #FFFFFF
 }
 
-table#multi tr {
+ul#multi li {
 	float: left;
 	width: 18%;
 	margin-left: 1%;
@@ -87,7 +87,7 @@ table#multi tr {
     text-align: center;
 }
 
-table#multi tr.selected {
+ul#multi li.selected {
     font-weight:bold;
 }
 

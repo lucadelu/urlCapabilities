@@ -36,7 +36,7 @@ div.right {
 
 div.buttons {
     position:relative;
-    width:20%;
+    width:40%;
     top:25px;
     height:70px;
     float:left;
@@ -76,6 +76,6 @@ li {
     list-style-type: square;
 }
 
-table#multi tr.selected {
+ul#multi li.selected {
     font-weight:bold;
 }
