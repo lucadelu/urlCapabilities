@@ -68,6 +68,7 @@ div.separation {
     left: 0px;
     right: 0px;
     text-align: center;
+    z-index: -1;
 }
 
 li {
