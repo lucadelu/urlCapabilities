@@ -32,8 +32,9 @@ require_once "php/settings.php";
       <script type="text/javascript" src="javascript/spin.min.js"></script>
       <script>
 	$(function(){
-	  var $lis = $('table#multi tbody tr');
+	  var $lis = $('ul#multi li');
 	  var $spinner = $('.loader');
+
 	  var spinneropts = {
 	    lines: 13, // The number of lines to draw
 	    length: 20, // The length of each line
@@ -67,10 +68,11 @@ require_once "php/settings.php";
 
 	      $box.find('.loader')/*.css({left:(offset.left+150)+'px', top:(offset.top+200)+'px'})*/.show();
 
-	      $box.find('tr.selected').removeClass('selected');
+	      $box.find('li.selected').removeClass('selected');
 	      var layer = $this.addClass('selected').text();
 
 	      var url = $this.data('image');
+	      var desc = $this.data('descr');
 	      $box.find('.layername').html(layer+' - <span>Loading...</span>');
 
 	      $map.attr('src',url).load([], function(response, status, xhr){
@@ -81,12 +83,15 @@ require_once "php/settings.php";
 	        } else {
 		  $box.find('.layername').text(layer);
 		  $box.find('.loader').hide();
+		  $descr=$box.find('.descrL');
+		  $descr.attr('value', 'Describe layer ' + layer);
+		  $descr.attr('onclick', desc);
 		}
 	      });
 
 	  });
 
-	  $('table#multi>tbody>tr:first-child').trigger('click');
+	  $('ul#multi>li:first-child').trigger('click');
 	});
       </script>
       </head>
@@ -107,7 +112,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     echo '     <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
         <div class="left">
            <h4><u>Layers:</u></h4>
-           <table id="multi">
+           <ul id="multi">
            ';
     #names of layers
     $nameLayers=getLayersName($mapfile);
@@ -117,7 +122,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     for ($i=0;$i<$numberLayers;$i++){
 	$descr=describeLayer($mapfile, $nameLayers[$i]);
         $thismap=getMap($mapfile,$i,$epsg_path);
-        $torder[$nameLayers[$i]] = "    <tr data-image=\"$thismap\"><td data-image=\"$thismap\">".$nameLayers[$i]."</td><td><input type=\"button\" value=\"Describe layer\" target=\"_blank\" onclick=\"".$descr."\"></td></tr>";
+        $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\" data-descr=\"$descr\">".$nameLayers[$i]."</li>";
     }
 
     uksort( $torder, 'strnatcmp');
@@ -131,11 +136,12 @@ for ($w=0;$w<count($mapfiles);$w++){
     #name for the id url
     $nomeUrl="url".str_replace(" ","",$nomeMapFile);
     echo '
-           </table>
+           </ul>
         </div>
         <div class="right">
              <div class="loader"></div>
              <img src="" class="map"><br />Layer: <span class="layername"></span>
+             <input type="button" value="" target="_blank" onclick="" class="descrL">
         </div>
         <div class="buttons">
              <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
