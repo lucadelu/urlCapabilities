@@ -112,7 +112,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     for ($i=0;$i<$numberLayers;$i++){
 	$descr=describeLayer($mapfile, $nameLayers[$i]);
         $thismap=getMap($mapfile,$i,$epsg_path);
-        $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\"><a target=\"_blank\" href=\"$descr\">".$nameLayers[$i]."</a></li>";
+        $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\">".$nameLayers[$i]."  <input type=\"button\" value=\"Describe layer\" target=\"_blank\" onclick=\"".$descr."\"></li>";
     }
 
     uksort( $torder, 'strnatcmp');
@@ -131,7 +131,6 @@ for ($w=0;$w<count($mapfiles);$w++){
         <div class="right">
              <div class="loader"></div>
              <img src="" class="map"><br />Layer: <span class="layername"></span>
-             <!-- <img src="'.$urlMappa.'" align="middle" id="map'.$nomeMapFile.'"><br />Layer: '.$nameLayers[$n].' -->
         </div>
         <div class="buttons">
              <input type="button" value="getCapabilities" target="_blank" onclick=getCapabilities("'.$richiesta.'");>
