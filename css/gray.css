@@ -76,6 +76,6 @@ li {
     list-style-type: square;
 }
 
-ul#multi li.selected {
+table#multi tr.selected {
     font-weight:bold;
 }
