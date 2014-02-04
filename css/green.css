@@ -36,9 +36,9 @@ div.right {
 
 div.buttons {
     position:relative;
-    width:60%;
+    width:40%;
     top:10px;
-    height:0px;
+    height:40px;
     float:left;
 }
 
@@ -46,10 +46,9 @@ div.buttons {
 div.url {
     position:relative;
     top:10px;
-    height:60px;
+    height:40px;
     float:left;
     width:59%;
-    left:40%;
 }
 
 ul#multi,ul#multi li {
