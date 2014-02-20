@@ -84,7 +84,6 @@ ul#multi li {
     left: 0px;
     right: 0px;
     text-align: center;
-    z-index: -1;
 }
 
 ul#multi li.selected {
