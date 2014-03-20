@@ -23,6 +23,7 @@ require_once "php/settings.php";
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
+      <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="css/gray.css">
       <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -107,8 +108,10 @@ for ($w=0;$w<count($mapfiles);$w++){
     $nomeMapFile=$mapfile->name;
     #name for the id container
     $contUrl="cont".str_replace(" ","",$nomeMapFile);
-
-    echo '     <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
+    $textUrl="text".str_replace(" ","",$nomeMapFile);
+    echo '     <div class="panel-group" id="accordion">
+                   <div class="container panel panel-default" id="'.$contUrl.'"><div class="panel-heading"><h1 align="center" class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#'.$textUrl.'">'.$nomeMapFile.'</a></h1>
+                   <div id="'.$textUrl.'" class="panel-collapse collapse in">
         <div class="left">
            <h4><u>Layers:</u></h4>
            <ul id="multi">
