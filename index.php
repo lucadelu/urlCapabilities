@@ -73,6 +73,8 @@ require_once "php/settings.php";
 
 	      var url = $this.data('image');
 	      var desc = $this.data('descr');
+	      var desc_wfs = $this.data('descr_wfs');
+	      console.log(desc_wfs);
 	      $box.find('.layername').html(layer+' - <span>Loading...</span>');
 
 	      $map.attr('src',url).load([], function(response, status, xhr){
@@ -82,11 +84,19 @@ require_once "php/settings.php";
 	        } else {
 		  $box.find('.layername').text(layer);
 		  $box.find('.loader').hide();
- 		  $button=$box.find('.buttons');
- 		  if ($button.find(".descrLayer").length != 0){
+		  $button=$box.find('.buttons');
+		  if ($button.find(".descrLayer").length != 0){
 		      $box.find('.descrLayer').remove()
- 		  }
- 		  $button.append('<input type="button" value="Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc + '") class="descrLayer">');
+		  }
+		  if ($button.find(".descrLayerWFS").length != 0){
+		      $box.find('.descrLayerWFS').remove()
+		  }
+		  if (desc_wfs == null) {
+		      $button.append('<input type="button" value="Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc + '") class="descrLayer">');
+		  } else {
+		      $button.append('<input type="button" value="WMS Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc + '") class="descrLayer">');
+		      $button.append('<input type="button" value="WFS Describe layer ' + layer + '" target="_blank" onclick=openUrl("' + desc_wfs + '") class="descrLayerWFS">');
+		  }
 		}
 	      });
 	  });
@@ -104,6 +114,7 @@ $mapfiles=getMapfiles($path);
 for ($w=0;$w<count($mapfiles);$w++){
     #create a new mapfile object
     $mapfile = ms_newMapObj($mapfiles[$w]);
+    $meta=getMetadati($mapfile);
     #mapfile name
     $nomeMapFile=$mapfile->name;
     #name for the id container
@@ -120,11 +131,18 @@ for ($w=0;$w<count($mapfiles);$w++){
     $nameLayers=getLayersName($mapfile);
     $numberLayers=count($nameLayers);
     $torder = array();
+    $owstype=getService($meta);
     #show the layers name in an order list
     for ($i=0;$i<$numberLayers;$i++){
-	$descr=describeLayer($mapfile, $nameLayers[$i]);
-        $thismap=getMap($mapfile,$i,$epsg_path);
-        $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\" data-descr=\"$descr\">".$nameLayers[$i]."</li>";
+	$thismap=getMap($mapfile,$i,$epsg_path);
+	if ($owstype == "OWS") {
+	    $descr=describeLayer($mapfile, $nameLayers[$i], "WMS");
+	    $descr_wfs=describeLayer($mapfile, $nameLayers[$i], "WFS");
+	    $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\" data-descr=\"$descr\" data-descr_wfs=\"$descr_wfs\">".$nameLayers[$i]."</li>";
+	} else {
+	    $descr=describeLayer($mapfile, $nameLayers[$i]);
+	    $torder[$nameLayers[$i]] = "    <li data-image=\"$thismap\" data-descr=\"$descr\">".$nameLayers[$i]."</li>";
+        }
     }
 
     uksort( $torder, 'strnatcmp');
@@ -145,8 +163,21 @@ for ($w=0;$w<count($mapfiles);$w++){
              <img src="" class="map"><br />Layer: <span class="layername"></span>
         </div>
         <div class="buttons">
-             <input type="button" value="getCapabilities" target="_blank" onclick=openUrl("'.$richiesta.'");>
-             <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>
+             <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>';
+    echo "\n";
+    if ($owstype == "OWS") {
+	$richiesta=getRequestCapabilities($mapfile,'WMS');
+	echo '             <input type="button" value="getCapabilities WMS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo "\n";
+	$richiesta=getRequestCapabilities($mapfile,'WFS');
+	echo '             <input type="button" value="getCapabilities WFS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo "\n";
+    } else {
+        $richiesta=getRequestCapabilities($mapfile,'WMS');
+	echo '             <input type="button" value="getCapabilities" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo "\n";
+    }
+    echo '
         </div>
         <div id="'.$nomeUrl.'" class="url"></div>
         <div class="separation"> </div>

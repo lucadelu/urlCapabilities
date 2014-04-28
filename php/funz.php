@@ -135,7 +135,7 @@ function getVersion($meta){
 
 function getService($meta){
     if (array_key_exists("ows_onlineresource",$meta)) {
-        $tipoServer="WMS";
+        $tipoServer="OWS";
     } elseif (array_key_exists("wms_onlineresource",$meta)) {
         $tipoServer="WMS";
     } elseif (array_key_exists("wfs_onlineresource",$meta)) {
@@ -147,9 +147,16 @@ function getService($meta){
 }
 
 #return getCapabilities query
-function getRequestCapabilities($map){
+function getRequestCapabilities($map, $type=null){
     $meta=getMetadati($map);
-    $tipoServer=getService($meta);
+    if (is_null($type) == true){
+	$tipoServer=getService($meta);
+	if ($tipoServer == "OWS") {
+	    $tipoServer="WMS";
+	}
+    } else {
+	$tipoServer=$type;
+    }
     $version=getVersion($meta);
     $url=getUrl($map);
     $request=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetCapabilities";
@@ -197,9 +204,16 @@ function getMapAll($map,$epsgFile){
     return $requests;
 }
 
-function describeLayer($map,$layername){
+function describeLayer($map,$layername,$type=null){
     $meta=getMetadati($map);
-    $tipoServer=getService($meta);
+    if (is_null($type) == true){
+	$tipoServer=getService($meta);
+	if ($tipoServer == "OWS") {
+	    $tipoServer="WMS";
+	}
+    } else {
+	$tipoServer=$type;
+    }
     $version=getVersion($meta);
     $url=getUrl($map);
     if ($tipoServer == 'WMS'){
