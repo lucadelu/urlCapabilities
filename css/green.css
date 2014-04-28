@@ -49,6 +49,7 @@ div.url {
     height:40px;
     float:left;
     width:59%;
+    font-weight:bold;
 }
 
 ul#multi,ul#multi li {
