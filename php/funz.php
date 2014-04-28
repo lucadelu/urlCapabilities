@@ -110,25 +110,33 @@ function getEpsgCode($map,$epsgFile){
     return $epsg;
 }
 
-function getVersion($meta){
-    if (array_key_exists("wms_server_version",$meta)) {
+function getVersion($meta, $tipo){
+    $version=null;
+    if (array_key_exists("wms_server_version",$meta) && $tipo=="WMS") {
         $version=$meta["wms_server_version"];
-    } elseif (array_key_exists("wfs_onlineresource",$meta)) {
+    } elseif (array_key_exists("wfs_onlineresource",$meta) && $tipo=="WFS") {
 	$version=$meta["wfs_server_version"];
-    } elseif (array_key_exists("wcs_onlineresource",$meta)) {
+    } elseif (array_key_exists("wfs_service_onlineresource",$meta) && $tipo=="WFS") {
+	$version=$meta["wfs_server_version"];
+    } elseif (array_key_exists("wcs_onlineresource",$meta) && $tipo=="WCS") {
 	$version=$meta["wcs_server_version"];
     } elseif (array_key_exists("ows_onlineresource",$meta)) {
 	$version=$meta["ows_server_version"];
-    } elseif (array_key_exists("wms_getcapabilities_version",$meta)) {
-            $version=$meta["wms_getcapabilities_version"];
-    } elseif (array_key_exists("wfs_getcapabilities_version",$meta)) {
-            $version=$meta["wms_getcapabilities_version"];
-    } elseif (array_key_exists("wcs_getcapabilities_version",$meta)) {
-            $version=$meta["wms_getcapabilities_version"];
+    } elseif (array_key_exists("wms_getcapabilities_version",$meta) && $tipo=="WMS") {
+        $version=$meta["wms_getcapabilities_version"];
+    } elseif (array_key_exists("wfs_getcapabilities_version",$meta) && $tipo=="WFS") {
+        $version=$meta["wfs_getcapabilities_version"];
+    } elseif (array_key_exists("wcs_getcapabilities_version",$meta) && $tipo=="WCS") {
+        $version=$meta["wcs_getcapabilities_version"];
     } elseif (array_key_exists("ows_getcapabilities_version",$meta)) {
-            $version=$meta["wms_getcapabilities_version"];
-    } else {
-	$version='1.0.0';
+        $version=$meta["ows_getcapabilities_version"];
+    }
+    if (is_null($version) == true){
+	if ($tipo=="WMS") {
+	    $version='1.3.0';
+	} elseif ($tipo=="WFS") {
+	    $version='1.1.0';
+	}
     }
     return $version;
 }
@@ -157,7 +165,7 @@ function getRequestCapabilities($map, $type=null){
     } else {
 	$tipoServer=$type;
     }
-    $version=getVersion($meta);
+    $version=getVersion($meta,$tipoServer);
     $url=getUrl($map);
     $request=$url."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetCapabilities";
     return $request;
@@ -214,7 +222,7 @@ function describeLayer($map,$layername,$type=null){
     } else {
 	$tipoServer=$type;
     }
-    $version=getVersion($meta);
+    $version=getVersion($meta,$tipoServer);
     $url=getUrl($map);
     if ($tipoServer == 'WMS'){
 	$request="DescribeLayer";
@@ -240,12 +248,11 @@ function getMap($map,$nLayer,$epsgFile){
     $names=getLayersName($map);
     $extent=$map->extent;
     $proj=getEpsgCode($map,$epsgFile);
-    $version=getVersion($meta);
+    $tipoServer="WMS";
+    $version=getVersion($meta,$tipoServer);
     if (array_key_exists("wms_onlineresource",$meta)) {
-        $tipoServer="WMS";
         $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } elseif (array_key_exists("ows_onlineresource",$meta)) {
-        $tipoServer="WMS";
         $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
     } else {
         foreach ($names as $NAME) {
