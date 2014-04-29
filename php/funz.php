@@ -270,4 +270,26 @@ function getMap($map,$nLayer,$epsgFile){
     return $request;
 }
 
+function curpageurl() {
+ $pageURL = 'http';
+ if (strpos($_SERVER["REQUEST_URI"], '.php') == false) {
+    $uri = $_SERVER["REQUEST_URI"];
+ } else {
+    $tmp = explode('/', $_SERVER["REQUEST_URI"]);
+    array_pop($tmp);
+    $uri = implode("/", $tmp);
+    $uri .= "/";
+ }
+ if (array_key_exists("HTTPS",$_SERVER)) {
+    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+ }
+ $pageURL .= "://";
+ if ($_SERVER["SERVER_PORT"] != "80") {
+    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$uri;
+ } else {
+    $pageURL .= $_SERVER["SERVER_NAME"].$uri;
+ }
+ return $pageURL;
+}
+
 ?>

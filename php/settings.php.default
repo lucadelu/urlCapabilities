@@ -23,4 +23,14 @@ $epsg_path='';
 
 # change $path if you want show the mapfile inside another path
 $path="mapfile/";
+
+# The title of your capabilities project
+$title="";
+
+# Is pycsw activate in your environment
+$pycsw=false;
+
+# Please write here the introduction text for the home page.
+# This text can be a full HTML text
+$intro="";
 ?>
