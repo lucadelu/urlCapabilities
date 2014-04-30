@@ -1,7 +1,6 @@
 <?php
 /***************************************************************************
-the first page of urlCapabilities, it has link to urlCapabilities main page,
-to about page and pycsw infos
+about page of urlCapabilities
 
 begin                : 2014-04-29
 copyright            : (C) 2009-2014 by luca delucchi
@@ -30,34 +29,31 @@ include "php/language.php"
     <script type="text/javascript" src="javascript/funz.js"></script>
   </head>
   <body style="background-color:#FFFFFF">
-      <div class="container" >
-          <h1 align="center"><?php echo$title; ?></h1>
-          <div class="left">
-<?php
-echo $lang["intro"];
-?>
-    </div>
-    <div class="right" style="display: table; #position: relative; overflow: hidden;">
-      <div style="display: table-cell; vertical-align: middle;">
-	<button class="btnExample" type="submit" onclick=openUrl('urlcapabilities.php');><img src="img/urlcapabilities_logo.png" width="15" height="22" alt=""/>  <?php echo $lang["Go to urlCapabilities catalogue"]; ?></button>
-<?php
-  if ($pycsw == true) {
-      echo '
-	<br /><br /><br />
-	<button class="btnExample" type="submit" value="Submit" onclick=getUrl("'.curpageurl().'pycsw/","pycsvurl");><img src="img/logo-pycsw.png" width="20" height="20" alt=""/>  Ottieni l\'url del Catalog Service for the Web</button>
-	<br /><br />
-	<div id="pycsvurl"></div>
-	<br />
-	<button class="btnExample" type="submit" value="Submit" onclick=openUrl("'.curpageurl().'pycsw/","pycsvurl");><img src="img/logo-pycsw.png" width="20" height="20" alt=""/>  Ottieni le capabilities del Catalog Service for the Web</button>
-      ';
-  }
-?>
-	<br /><br /><br />
-	<button class="btnExample" type="submit" onclick=openUrl('about.php');><img src="img/about.jpg" width="20" height="20" alt=""/>  <?php echo $lang["About urlCapabilities"]; ?></button>
+    <div class="container" >
+      <h1 align="center"><?php echo $lang["About urlCapabilities"]; ?></h1>
+      <div><?php echo $lang["about"]; ?></div>
+      <h3 align="center"><?php echo $lang["Dependencies"]; ?></h3>
+      <div><?php echo $lang["To run correctly urlCapabilities you need to install"]; ?>:
+	<ul>
+	  <li><a href="http://httpd.apache.org/" targer="_blank">Apache</a></li>
+	  <li><a href="http://www.php.net/" target="_blank">PHP</a></li>
+	  <li><a href="http://mapserver.org/mapscript/php/index.html" target="_blank">PHP-Mapscript</a></li>
+	  <li><a href="http://pycsw.org" target="_blank">pycsw</a> (<?php echo $lang["optional, only if you want CSW service"]; ?>)</li>
+	</ul>
       </div>
+      <h3 align="center"><?php echo $lang["How to install urlCapabilities"]; ?></h3>
+      <div>
+	<ul>
+	  <?php echo $lang["howtoinstall"]; ?>
+	</ul>
+      </div>
+      <h3 align="center"><?php echo $lang["urlCapabilities Settings"]; ?></h3>
+      <div> <?php echo $lang["url_settings"]; ?> </div>
+      <h3 align="center"><?php echo $lang["Mapfile Settings"]; ?></h3>
+      <div> <?php echo $lang["mapfile_settings"]; ?> </div>
+<!--      <h3 align="center"><?php echo $lang["Thanks to"]; ?></h3>
+      <div> <?php echo $lang["thanks"]; ?> </div>-->
     </div>
-    </div>
-    <div class="separation"></div>
     <div id="footer">
       <table id="footer_table" align="center">
 	<tr>

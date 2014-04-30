@@ -5,7 +5,7 @@ php functions for index.php
 
                              -------------------
 begin                : 2010-01-03 
-copyright            : (C) 2009 by luca delucchi
+copyright            : (C) 2009-2014 by luca delucchi
 email                : lucadeluge@gmail.com 
  ***************************************************************************/
 

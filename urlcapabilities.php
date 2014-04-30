@@ -4,7 +4,7 @@ the core of urlCapabilities, it create and show the page with url, the map
 and getCapabilities
 
 begin                : 2010-01-03
-copyright            : (C) 2009 by luca delucchi
+copyright            : (C) 2009-2014 by luca delucchi
 email                : lucadeluge@gmail.com
  ***************************************************************************/
 
@@ -18,7 +18,7 @@ email                : lucadeluge@gmail.com
 
 require_once 'php/funz.php';
 require_once "php/settings.php";
-
+include "php/language.php"
 ?>
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -27,9 +27,7 @@ require_once "php/settings.php";
       <link rel="stylesheet" type="text/css" href="css/gray.css">
       <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<?php
-echo "  <title>$title</title>";
-?>
+	  <title><?php echo $title; ?></title>
       <script type="text/javascript" src="javascript/funz.js"></script>
       <script type="text/javascript" src="javascript/jquery-1.7.js"></script>
       <script type="text/javascript" src="javascript/spin.min.js"></script>
@@ -80,7 +78,7 @@ echo "  <title>$title</title>";
 
 	      $map.attr('src',url).load([], function(response, status, xhr){
 	        if ( status == "error" ) {
-		  $box.find('.layername').text("Problem loading layer " + layer)
+		  $box.find('.layername').text('<?php echo $lang["Problem loading layer"]; ?> ' + layer)
 		  $box.find('.loader').hide();
 	        } else {
 		  $box.find('.layername').text(layer);
@@ -126,7 +124,7 @@ for ($w=0;$w<count($mapfiles);$w++){
 //                    <div id="'.$textUrl.'" class="panel-collapse collapse in">
     echo '     <div class="container" id="'.$contUrl.'"><h1 align="center">'.$nomeMapFile.'</h1>
         <div class="left">
-           <h4><u>Layers:</u></h4>
+           <h4><u>'.$lang["Layers"].':</u></h4>
            <ul id="multi">
            ';
     #names of layers
@@ -162,7 +160,7 @@ for ($w=0;$w<count($mapfiles);$w++){
         </div>
         <div class="right">
              <div class="loader"></div>
-             <img src="" class="map"><br />Layer: <span class="layername"></span>
+             <img src="" class="map"><br />'.$lang["Layer"].': <span class="layername"></span>
         </div>
         <div class="buttons">
              <input type="button" value="getUrl" target="_blank" onclick=getUrl("'.$url.'","'.$nomeUrl.'");>';
@@ -187,6 +185,20 @@ for ($w=0;$w<count($mapfiles);$w++){
       </div>';
 }
 ?>
-    <div id="footer">Powered by <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></div>
+    <div id="footer">
+      <table id="footer_table" align="center">
+	<tr>
+	  <td align="left" width="30%"><a href="index.php"><?php echo $lang["Home page"]; ?></a></td>
+	  <td align="center" width="40%"><?php echo $lang["Powered by"]; ?> <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></td>
+	  <td style="text-align:right;" width="40%"><?php echo $lang["Available languages"]; ?>:
+	      <?php
+	      foreach ($languages as $key => $value) {
+		echo " <a href=\"javascript:setLang('$key')\">$value</a>";
+	      }
+	      ?>
+	  </td>
+	</tr>
+      </table>
+    </div>
   </body>
 </html>

@@ -30,7 +30,6 @@ $title="";
 # Is pycsw activate in your environment
 $pycsw=false;
 
-# Please write here the introduction text for the home page.
-# This text can be a full HTML text
-$intro="";
+# Set the available languages (choiches: it, en)
+$languages=array("it" => "Italian", "en" => "English")
 ?>

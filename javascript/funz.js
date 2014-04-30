@@ -28,3 +28,19 @@ function getUrl(url,id){
         e.innerHTML = '';
     }
 }
+
+function setLang(cod){
+    jQuery.ajax({
+        url: 'php/language.php',
+        type: 'POST',
+        data: {
+            lang: cod,
+        },
+        success: function(data, textStatus, xhr) {
+	    location.reload();
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log(textStatus.reponseText);
+        }
+    });
+}
