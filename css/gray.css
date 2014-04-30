@@ -37,15 +37,14 @@ div.buttons {
     position:relative;
     width:40%;
     top:25px;
-    height:70px;
+    height:90px;
     float:left;
 }
-
 
 div.url {
     position:relative;
     top:25px;
-    height:70px;
+    height:90px;
     float:left;
     width:59%;
     font-weight:bold;
@@ -67,6 +66,13 @@ div.separation {
     left: 0px;
     right: 0px;
     text-align: center;
+}
+
+#footer_table {
+    border:2px solid;
+    border-radius:25px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 li {

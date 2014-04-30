@@ -14,13 +14,13 @@ body {
 }*/
 
 h1 {
-     margin-top:0.25em;
-     margin-bottom:0.25em;
+    margin-top:0.25em;
+    margin-bottom:0.25em;
 }
 
 div.left h4 {
-     margin-top:0.5em;
-     margin-bottom:0.5em;
+    margin-top:0.5em;
+    margin-bottom:0.5em;
 }
 
 div.left {
@@ -37,44 +37,43 @@ div.right {
 div.buttons {
     position:relative;
     width:40%;
-    top:10px;
-    height:40px;
+    top:25px;
+    height:90px;
     float:left;
 }
 
-
 div.url {
     position:relative;
-    top:10px;
-    height:40px;
+    top:25px;
+    height:90px;
     float:left;
     width:59%;
     font-weight:bold;
 }
 
 ul#multi,ul#multi li {
-	margin:0;
-	padding:0;
-	list-style:none
+    margin:0;
+    padding:0;
+    list-style:none
 }
 
 ul#multi {
-	width: 100%;
-	overflow: hidden;
+    width: 100%;
+    overflow: hidden;
 /*    	padding: 1em 0;
-	margin:4em 0;*/
-	line-height: 1.8;
-    	background: green;
-        margin-bottom:0.5em;
-	color: #FFFFFF
+    margin:4em 0;*/
+    line-height: 1.8;
+    background: green;
+    margin-bottom:0.5em;
+    color: #FFFFFF
 }
 
 ul#multi li {
-	float: left;
-	width: 18%;
-	margin-left: 1%;
-	display: inline;
-    	border-bottom:1px dotted #FFFFFF
+    float: left;
+    width: 18%;
+    margin-left: 1%;
+    display: inline;
+    border-bottom:1px dotted #FFFFFF
 } 
 
 #footer {
@@ -86,6 +85,14 @@ ul#multi li {
     right: 0px;
     text-align: center;
 }
+
+#footer_table {
+    border:2px solid;
+    border-radius:25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 
 ul#multi li.selected {
     font-weight:bold;
