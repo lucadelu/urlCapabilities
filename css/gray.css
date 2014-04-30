@@ -63,8 +63,10 @@ div.separation {
     width: 100%;
     height: 30px;
     bottom: 0px;
+    position: relative;
     left: 0px;
     right: 0px;
+    float:left;
     text-align: center;
 }
 
@@ -80,5 +82,10 @@ li {
 }
 
 ul#multi li.selected {
+    font-weight:bold;
+}
+
+.warning {
+    color: red;
     font-weight:bold;
 }
