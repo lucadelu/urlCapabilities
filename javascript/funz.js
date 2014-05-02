@@ -19,6 +19,11 @@ function openUrl(web){
     window.open(web, '_blank');
 }
 
+// open the getCapabilities query
+function openUrl2(web){
+    window.open(web, '_parent');
+}
+
 // show/hide the url
 function getUrl(url,id){
     var e = document.getElementById(id);
