@@ -39,7 +39,7 @@ echo $lang["intro"];
     </div>
     <div class="right" style="display: table; #position: relative; overflow: hidden;">
       <div style="display: table-cell; vertical-align: middle;">
-	<button class="btnExample" type="submit" onclick=openUrl('urlcapabilities.php');><img src="img/urlcapabilities_logo.png" width="15" height="22" alt=""/>  <?php echo $lang["Go to urlCapabilities catalogue"]; ?></button>
+	<button class="btnExample" type="submit" onclick=openUrl2('urlcapabilities.php');><img src="img/urlcapabilities_logo.png" width="15" height="22" alt=""/>  <?php echo $lang["Go to urlCapabilities catalogue"]; ?></button>
 <?php
   if ($pycsw == true) {
       echo '
@@ -53,7 +53,7 @@ echo $lang["intro"];
   }
 ?>
 	<br /><br /><br />
-	<button class="btnExample" type="submit" onclick=openUrl('about.php');><img src="img/about.jpg" width="20" height="20" alt=""/>  <?php echo $lang["About urlCapabilities"]; ?></button>
+	<button class="btnExample" type="submit" onclick=openUrl2('about.php');><img src="img/about.jpg" width="20" height="20" alt=""/>  <?php echo $lang["About urlCapabilities"]; ?></button>
       </div>
     </div>
     </div>
