@@ -34,5 +34,7 @@ $lang = array(
   "Continue" => "Continue",
   "An error occurred during the setup of the database. Please check the Apache log file" => "An error occurred during the setup of the database. Please check the Apache log file",
   "pycsw_url" => "Set the url of pycsw service. Leave the default value if you used the suggested values in default.cfg file",
+  "Get url of Catalog Service for the Web" => "Get url of Catalog Service for the Web",
+  "Get capabilities of Catalog Service for the Web" => "Get capabilities of Catalog Service for the Web",
 );
 ?>
