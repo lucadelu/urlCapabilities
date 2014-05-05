@@ -312,4 +312,21 @@ function cmd_exists($command)
     return $exists;
 }
 
+function set_footer($languages, $lang, $lang_flag)
+{
+    $ret = "";
+    if (count($languages) > 0) {
+	$ret = $ret."<td style=\"text-align:right;\" width=\"40%\">".$lang["Available languages"].":";
+	foreach ($languages as $key => $value) {
+	  $flag='';
+	  if ($lang_flag == true) {
+	      $flag="<img src=\"img/lang/$key.png\" />  ";
+	  }
+	  $ret = $ret." <a href=\"javascript:setLang('$key')\">$flag$value</a>";
+	}
+	$ret = $ret."</td>";
+    }
+    return $ret;
+}
+
 ?>

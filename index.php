@@ -63,16 +63,7 @@ echo $lang["intro"];
 	<tr>
 	  <td align="left" width="30%"><a href="index.php"><?php echo $lang["Home page"]; ?></a></td>
 	  <td align="center" width="40%"><?php echo $lang["Powered by"]; ?> <a href="https://github.com/lucadelu/urlCapabilities/">urlCapabilities</a></td>
-	  <?php if (count($languages) > 0) { echo "<td style=\"text-align:right;\" width=\"40%\">".$lang["Available languages"].":"; }
-	      foreach ($languages as $key => $value) {
-		$flag='';
-		if ($lang_flag == true) {
-		    $flag="<img src=\"img/lang/$key.png\" />  ";
-		}
-		echo " <a href=\"javascript:setLang('$key')\">$flag$value</a>";
-	      }
-	      echo "</td>";
-	 ?>
+	  <?php echo set_footer($languages, $lang, $lang_flag); ?>
 	</tr>
       </table>
     </div>
