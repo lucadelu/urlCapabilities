@@ -36,5 +36,6 @@ $lang = array(
   "pycsw_url" => "Set the url of pycsw service. Leave the default value if you used the suggested values in default.cfg file",
   "Get url of Catalog Service for the Web" => "Get url of Catalog Service for the Web",
   "Get capabilities of Catalog Service for the Web" => "Get capabilities of Catalog Service for the Web",
+  "pycsw update script" => "pycsw update script",
 );
 ?>
