@@ -31,5 +31,8 @@ $title="";
 $pycsw=false;
 
 # Set the available languages (choiches: it, en)
-$languages=array("it" => "Italian", "en" => "English")
+$languages=array("it" => "Italian", "en" => "English");
+
+# Add flags of choosen languages
+$lang_flag=true;
 ?>
