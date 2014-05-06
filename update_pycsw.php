@@ -50,7 +50,7 @@ switch($step){
 function step_1($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw update script"]; ?></h1>
- <h3>Step 1 of 2</h3>
+ <h3><?php printf($lang["Step %s of %s"], '1', '2'); ?></h3>
  <form action="install_pycsw.php?step=4" method="post">
  <p>
   <?php echo $lang["harvest"]; ?>
@@ -98,7 +98,7 @@ function step_1($lang){
 function step_2($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw update script"]; ?></h1>
- <h3>Step 2 of 2</h3>
+ <h3><?php printf($lang["Step %s of %s"], '2', '2'); ?></h3>
   <p><?php echo $lang["finish"]; ?></p>
   <?php echo "<button type=\"submit\" value=\"pycsw\" onclick=openUrl(\"".curpageurl()."pycsw/?service=CSW&version=2.0.2&request=GetCapabilities\");>pycsw</button>
   <button type=\"submit\" value=\"Finish\" onclick=openUrl2(\"index.php\");>".$lang["Finish"]."</button>";

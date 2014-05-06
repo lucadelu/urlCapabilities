@@ -59,7 +59,7 @@ switch($step){
 function step_1($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
- <h3>Step 1 of 5</h3>
+ <h3><?php printf($lang["Step %s of %s"], '1', '5'); ?></h3>
  <form action="install_pycsw.php?step=1" method="post">
  <p>
   <?php echo $lang["pycsw_default"]; ?>
@@ -85,7 +85,7 @@ function step_1($lang){
 function step_2($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
- <h3>Step 2 of 5</h3>
+ <h3><?php printf($lang["Step %s of %s"], '2', '5'); ?></h3>
  <form action="install_pycsw.php?step=2" method="post">
  <p>
   <?php echo $lang["pycsw_db"]; ?>
@@ -120,7 +120,7 @@ function step_2($lang){
 function step_3($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
- <h3>Step 3 of 5</h3>
+ <h3><?php printf($lang["Step %s of %s"], '3', '5'); ?></h3>
  <form action="install_pycsw.php?step=3" method="post">
  <p>
   <?php echo "
@@ -153,7 +153,7 @@ function step_3($lang){
 function step_4($lang, $path){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
- <h3>Step 4 of 5</h3>
+ <h3><?php printf($lang["Step %s of %s"], '4', '5'); ?></h3>
  <form action="install_pycsw.php?step=4" method="post">
  <p>
   <?php echo $lang["harvest"]; ?>
@@ -201,7 +201,7 @@ function step_4($lang, $path){
 function step_5($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
- <h3>Step 5 of 5</h3>
+ <h3><?php printf($lang["Step %s of %s"], '5', '5'); ?></h3>
   <p><?php echo $lang["finish"]; ?></p>
   <?php echo "<button type=\"submit\" value=\"pycsw\" onclick=openUrl(\"".curpageurl()."pycsw/?service=CSW&version=2.0.2&request=GetCapabilities\");>pycsw</button>
   <button type=\"submit\" value=\"Finish\" onclick=openUrl2(\"index.php\");>".$lang["Finish"]."</button>";
