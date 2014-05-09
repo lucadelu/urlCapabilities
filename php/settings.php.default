@@ -35,4 +35,7 @@ $languages=array("it" => "Italian", "en" => "English");
 
 # Add flags of choosen languages
 $lang_flag=true;
+
+# Style file, this should be in css directory (available gray.css, green.css)
+$css = "gray.css";
 ?>
