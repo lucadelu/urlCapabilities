@@ -121,7 +121,11 @@ function getVersion($meta, $tipo){
     } elseif (array_key_exists("wcs_onlineresource",$meta) && $tipo=="WCS") {
 	$version=$meta["wcs_server_version"];
     } elseif (array_key_exists("ows_onlineresource",$meta)) {
-	$version=$meta["ows_server_version"];
+	if (array_key_exists("wms_server_version",$meta) && $tipo=="WMS") {
+	    $version=$meta["wms_server_version"];
+	} elseif (array_key_exists("wfs_server_version",$meta) && $tipo=="WFS") {
+	    $version=$meta["wfs_server_version"];
+	}
     } elseif (array_key_exists("wms_getcapabilities_version",$meta) && $tipo=="WMS") {
         $version=$meta["wms_getcapabilities_version"];
     } elseif (array_key_exists("wfs_getcapabilities_version",$meta) && $tipo=="WFS") {
