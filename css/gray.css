@@ -86,7 +86,7 @@ ul#multi li.selected {
 }
 
 .line25 {
-    line-height: 18px;
+    line-height: 25px;
 }
 
 .justify {
@@ -96,4 +96,8 @@ ul#multi li.selected {
 .warning {
     color: red;
     font-weight:bold;
+}
+
+.liketext { 
+    display:inline;
 }
