@@ -181,7 +181,9 @@ function step_4($lang, $path){
 </Harvest>';
 	$file_name = tempnam(sys_get_temp_dir(), 'urlCapabilities');
         file_put_contents($file_name, $string);
+        ob_start();
         $output = system("pycsw-admin.py -c post_xml -u ".$_POST['urlpycsw']." -x $file_name");
+        ob_clean();
     }
     header('Location: install_pycsw.php?step=5');
     exit;
