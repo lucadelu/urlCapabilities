@@ -32,7 +32,7 @@ include "php/language.php"
   <body style="background-color:#FFFFFF">
       <div class="container" >
           <h1 align="center"><?php echo $title; ?></h1>
-          <div class="left">
+          <div class="left justify line25" style="padding: 5px;">
 <?php
 echo $lang["intro"];
 ?>

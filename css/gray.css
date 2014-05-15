@@ -85,6 +85,14 @@ ul#multi li.selected {
     font-weight:bold;
 }
 
+.line25 {
+    line-height: 18px;
+}
+
+.justify {
+    text-align:justify;
+}
+
 .warning {
     color: red;
     font-weight:bold;
