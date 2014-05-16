@@ -134,7 +134,7 @@ for ($w=0;$w<count($mapfiles);$w++){
     $owstype=getService($meta);
     #show the layers name in an order list
     for ($i=0;$i<$numberLayers;$i++){
-	$thismap=getMap($mapfile,$i,$epsg_path);
+	$thismap=getMap($mapfile,$i,$epsg_path, $iwidth, $iheight);
 	if ($owstype == "OWS") {
 	    $descr=describeLayer($mapfile, $nameLayers[$i], "WMS");
 	    $descr_wfs=describeLayer($mapfile, $nameLayers[$i], "WFS");

@@ -38,4 +38,10 @@ $lang_flag=true;
 
 # Style file, this should be in css directory (available gray.css, green.css)
 $css = "gray.css";
+
+# Image width for preview images
+$iwidth = 600;
+
+# Image height for preview images
+$iheight = 400;
 ?>

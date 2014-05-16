@@ -247,7 +247,7 @@ function describeLayer($map,$layername,$type=null){
 }
 
 #return the map of the layer selected by a number. WARNING the layer number start from 0
-function getMap($map,$nLayer,$epsgFile){
+function getMap($map,$nLayer,$epsgFile, $wid, $hei){
     $meta=getMetadati($map);
     $names=getLayersName($map);
     $extent=$map->extent;
@@ -255,9 +255,9 @@ function getMap($map,$nLayer,$epsgFile){
     $tipoServer="WMS";
     $version=getVersion($meta,$tipoServer);
     if (array_key_exists("wms_onlineresource",$meta)) {
-        $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $request=cleanUrl($meta["wms_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=".$wid."&HEIGHT=".$hei."&FORMAT=image/png";
     } elseif (array_key_exists("ows_onlineresource",$meta)) {
-        $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=400&HEIGHT=300&FORMAT=image/png";
+        $request=cleanUrl($meta["ows_onlineresource"])."SERVICE=".$tipoServer."&VERSION=".$version."&REQUEST=GetMap&LAYERS=".$names[$nLayer]."&STYLES=&SRS=EPSG:".$proj."&CRS=EPSG:".$proj."&BBOX=".$extent->minx.",".$extent->miny.",".$extent->maxx.",".$extent->maxy."&WIDTH=".$wid."&HEIGHT=".$hei."&FORMAT=image/png";
     } else {
         foreach ($names as $NAME) {
             $layer = $map->getLayerByName($NAME);
