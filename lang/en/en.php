@@ -38,5 +38,7 @@ $lang = array(
   "Get capabilities of Catalog Service for the Web" => "Get capabilities of Catalog Service for the Web",
   "pycsw update script" => "pycsw update script",
   "Step %s of %s" => "Step %s of %s",
+  "Help" => "Help",
+  "Click on layer name for preview and more info about that layer" => "Click on layer name for preview and more info about that layer",
 );
 ?>

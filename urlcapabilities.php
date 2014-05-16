@@ -105,7 +105,12 @@ include "php/language.php"
       </script>
       </head>
       <body style="background-color:#FFFFFF">
-
+      <div class="toc justify">
+	<h3 class="toc"><?php echo $lang["Help"]; ?></h3>
+	<ul class="toc">
+	  <li><?php echo $lang["Click on layer name for preview and more info about that layer"]; ?></li>
+	</ul>
+      </div>
 <?php
 # return all the mapfiles inside the path
 $mapfiles=getMapfiles($path);

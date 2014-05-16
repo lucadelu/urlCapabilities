@@ -6,12 +6,13 @@ body {
     width:95%;
 }
 
-/*div.container {
-    height:100%;
+div.container {
+    width:85%;
+    /*height:100%;
     border-top-width:1px;
     border-top-color:black;
-    border-top-style:solid;
-}*/
+    border-top-style:solid;*/
+}
 
 h1 {
     margin-top:0.25em;
@@ -69,7 +70,7 @@ ul#multi {
 }
 
 ul#multi li {
-    float: left;
+/*     float: left; */
     width: 18%;
     margin-left: 1%;
     display: inline;
@@ -84,6 +85,7 @@ ul#multi li {
     left: 0px;
     right: 0px;
     text-align: center;
+    float: left;
 }
 
 #footer_table {
@@ -96,6 +98,29 @@ ul#multi li {
 
 ul#multi li.selected {
     font-weight:bold;
+}
+
+div.toc {
+    background-color: transparent;
+    position: fixed;
+    border: solid 1px green;
+    top: 5px;
+    right: 5px;
+    width: 15%;
+    font-size: small;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+h3.toc {
+    margin-top: 0.2em;
+    margin-bottom: 0.1em;
+}
+
+ul.toc {
+    margin-top: 0.2em;
+    margin-bottom: 0.1em;
 }
 
 /*div.separation {
