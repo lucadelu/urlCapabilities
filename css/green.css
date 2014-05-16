@@ -123,6 +123,21 @@ ul.toc {
     margin-bottom: 0.1em;
 }
 
+span.it:before {
+    content: url(../img/lang/it.png);
+    display: inline;
+}
+
+span.en:before {
+    content: url(../img/lang/en.png);
+    display: inline;
+}
+
+span.inline {
+    display: inline;
+    white-space: nowrap;
+}
+
 /*div.separation {
     position:relative;
     top:5px;

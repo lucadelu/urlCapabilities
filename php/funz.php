@@ -324,9 +324,10 @@ function set_footer($languages, $lang, $lang_flag)
 	foreach ($languages as $key => $value) {
 	  $flag='';
 	  if ($lang_flag == true) {
-	      $flag="<img src=\"img/lang/$key.png\" />  ";
+	      $ret = $ret." <span class=\"inline $key\"><a class=\"inline\" href=\"javascript:setLang('$key')\">$value</a></span>";
+	  } else {
+	      $ret = $ret." <span class=\"inline\"><a class=\"inline\" href=\"javascript:setLang('$key')\">$value</a></span>";
 	  }
-	  $ret = $ret." <a href=\"javascript:setLang('$key')\">$flag$value</a>";
 	}
 	$ret = $ret."</td>";
     }
