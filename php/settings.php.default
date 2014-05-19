@@ -44,4 +44,7 @@ $iwidth = 600;
 
 # Image height for preview images
 $iheight = 400;
+
+# Image for icon in web browser tab bar
+$ico = "urlcapabilities_logo.ico";
 ?>

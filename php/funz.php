@@ -334,4 +334,16 @@ function set_footer($languages, $lang, $lang_flag)
     return $ret;
 }
 
+function set_header($title, $css, $ico)
+{
+    return "
+    <link rel='stylesheet' type='text/css' href='css/$css'>
+    <link rel='shortcut icon' href='img/$ico'>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <title>$title></title>
+    <script type='text/javascript' src='javascript/jquery-1.7.js'></script>
+    <script type='text/javascript' src='javascript/funz.js'></script>
+    ";
+}
+
 ?>
