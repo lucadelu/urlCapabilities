@@ -177,9 +177,17 @@ for ($w=0;$w<count($mapfiles);$w++){
 	$richiesta=getRequestCapabilities($mapfile,'WFS');
 	echo '             <input type="button" value="getCapabilities WFS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
 	echo "\n";
-    } else {
+    } elseif ($owstype == "WMS") {
         $richiesta=getRequestCapabilities($mapfile,'WMS');
-	echo '             <input type="button" value="getCapabilities" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo '             <input type="button" value="getCapabilities WMS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo "\n";
+    } elseif ($owstype == "WFS") {
+        $richiesta=getRequestCapabilities($mapfile,'WFS');
+	echo '             <input type="button" value="getCapabilities WFS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
+	echo "\n";
+    } elseif ($owstype == "WCS") {
+        $richiesta=getRequestCapabilities($mapfile,'WCS');
+	echo '             <input type="button" value="getCapabilities WCS" target="_blank" onclick=openUrl("'.$richiesta.'");>';
 	echo "\n";
     }
     echo '
