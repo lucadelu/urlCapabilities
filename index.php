@@ -46,7 +46,7 @@ echo $lang["intro"];
 	<br /><br /><br />
 	<button class="btnExample" type="submit" value="Submit" onclick=getUrl("'.curpageurl().'pycsw/","pycsvurl");><img src="img/logo-pycsw.png" width="20" height="20" alt=""/>  '.$lang["Get url of Catalog Service for the Web"].'</button>
 	<br /><br />
-	<div id="pycsvurl" class="url"></div>
+	<div id="pycsvurl" style="font-weight:bold;"></div>
 	<br />
 	<button class="btnExample" type="submit" value="Submit" onclick=openUrl("'.curpageurl().'pycsw/?service=CSW&version=2.0.2&request=GetCapabilities","pycsvurl");><img src="img/logo-pycsw.png" width="20" height="20" alt=""/>  '.$lang["Get capabilities of Catalog Service for the Web"].'</button>
       ';
