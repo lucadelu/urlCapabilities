@@ -135,8 +135,12 @@ span.en:before {
     display: inline;
 }
 
+span.es:before {
+    content: url(../img/lang/es.png);
+    display: inline;
+}
+
 span.inline {
-  
     display: inline;
     white-space: nowrap;
 }
