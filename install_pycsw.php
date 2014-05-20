@@ -58,7 +58,29 @@ function step_1($lang){
  <h3><?php printf($lang["Step %s of %s"], '1', '5'); ?></h3>
  <form action="install_pycsw.php?step=1" method="post">
  <p>
-  <?php echo $lang["pycsw_default"]; ?>
+  <?php echo $lang["Please copy or rename <code>".getcwd()."/pycsw/default-sample.cfg</code> to <code>".getcwd()."/pycsw/default.cfg</code> and modify it."]; ?>
+  <br />
+  <?php echo $lang["The required fields to modify are the following (with suggested default values):"]; ?>
+  <ul>
+    <li>
+      <?php echo $lang["into [server] section:"];
+      echo "<ul><li><b>home</b>: ".getcwd()."/pycsw</li><li><b>url</b>: http://". $_SERVER['HTTP_HOST'].str_replace("install_pycsw.php", "pycsw",$_SERVER["REQUEST_URI"])."</li></ul>"
+      ?>
+    </li>
+    <li>
+      <?php echo $lang["into [manager] section:"]; ?>
+      <ul>
+	<li>
+	  <b>transactions</b>: true
+	</li>
+      </ul>
+    </li>
+    <li>
+      <?php echo $lang["into [repository] section:"];
+      echo "<ul><li><b>database</b>: sqlite:///".getcwd()."/pycsw/records.db</li></ul></li></ul>For additional info read the <a href=\"http://pycsw.org/docs/1.8.0/configuration.html\" target=\"_blank\">pycsw's documentation</a>.";
+      ?>
+    </li>
+  </ul>
   <br /><br />
   <?php echo $lang["Please mark the checkbox and click on 'continue' button for the next step"]; ?>  
   <input type="checkbox" name="agree" />
@@ -84,7 +106,9 @@ function step_2($lang){
  <h3><?php printf($lang["Step %s of %s"], '2', '5'); ?></h3>
  <form action="install_pycsw.php?step=2" method="post">
  <p>
-  <?php echo $lang["pycsw_db"]; ?>
+  <?php echo $lang["Next step will setup the database for pycsw."]; echo " "; echo $lang["A SQLite database will be created into directory <code>".getcwd()."/pycsw</code> (if you used the suggested path in <b>database</b> option)."]; ?>
+  <br />
+  <em><?php echo $lang["Please check the write permission for 'Apache' user in ".getcwd()."/pycsw before continue."] ?></em>
   <br /><br />
   <?php echo $lang["Please mark the checkbox and click on 'continue' button for the next step"]; ?>
   <input type="checkbox" name="agree" />
@@ -128,7 +152,7 @@ function step_3($lang){
       Allow from all
   </Directory>")."
   </code></pre>
-  ".$lang["Please enable module wsgi and restart Apache"]."<br /><br />
+  <i>".$lang["Please enable module wsgi and restart Apache"]."</i><br /><br />
   ".$lang["Please mark the checkbox and click on 'continue' button for the next step"]."
   <input type=\"checkbox\" name=\"agree\" />
  </p>";
@@ -152,9 +176,9 @@ function step_4($lang, $path){
  <h3><?php printf($lang["Step %s of %s"], '4', '5'); ?></h3>
  <form action="install_pycsw.php?step=4" method="post">
  <p>
-  <?php echo $lang["harvest"]; ?>
+  <?php echo $lang["Next step is to harvest your services."]; echo " "; echo $lang["The directory <code>".getcwd()."/$path</code> will be used to read the mapfiles."]; ?>
   <br />
-  <?php echo "<p>".$lang["pycsw_url"]."</p><input value=\"".curpageurl()."pycsw\" name=\"urlpycsw\" />"; ?>
+  <?php echo "<p>".$lang["pycsw_url"]."</p><input value=\"".curpageurl()."pycsw\" name=\"urlpycsw\" size=\"60\"/>"; ?>
   <br /><br />
   <?php echo $lang["Please mark the checkbox and click on 'continue' button for the next step"]; ?>
   <input type="checkbox" name="agree" />
@@ -197,7 +221,7 @@ function step_5($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw installation script"]; ?></h1>
  <h3><?php printf($lang["Step %s of %s"], '5', '5'); ?></h3>
-  <p><?php echo $lang["finish"]; ?></p>
+  <p><?php echo $lang["Installation finished."]; echo "<br />"; echo $lang["You can test `pycsw` using the button `pycsw`."]; echo " "; echo $lang["Clicking on `Finish` you will be redirect to the home page."];echo "<br /><br />"; echo $lang["We suggest to delete the file <code>".getcwd()."/install_pycsw.php</code>"]?></p>
   <?php echo "<button type=\"submit\" value=\"pycsw\" onclick=openUrl(\"".curpageurl()."pycsw/?service=CSW&version=2.0.2&request=GetCapabilities\");>pycsw</button>
   <button type=\"submit\" value=\"Finish\" onclick=openUrl2(\"index.php\");>".$lang["Finish"]."</button>";
   ?>

@@ -47,11 +47,11 @@ function step_1($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw update script"]; ?></h1>
  <h3><?php printf($lang["Step %s of %s"], '1', '2'); ?></h3>
- <form action="install_pycsw.php?step=4" method="post">
+ <form action="update_pycsw.php?step=1" method="post">
  <p>
-  <?php echo $lang["harvest"]; ?>
+  <?php echo $lang["Next step is to harvest your services."]; echo " "; echo $lang["The directory <code>".getcwd()."/$path</code> will be used to read the mapfiles."]; ?>
   <br />
-  <?php echo "<p>".$lang["pycsw_url"]."</p><input value=\"".curpageurl()."pycsw\" name=\"urlpycsw\" />"; ?>
+  <?php echo "<p>".$lang["Set the url of pycsw service."]." ".$lang["Leave the default value if you used the suggested values in default.cfg file"]."</p><input value=\"".curpageurl()."pycsw\" name=\"urlpycsw\" size=\"60\"/>"; ?>
   <br /><br />
   <?php echo $lang["Please mark the checkbox and click on 'continue' button for the next step"]; ?>
   <input type="checkbox" name="agree" />
@@ -78,7 +78,7 @@ function step_1($lang){
         $output = passthru("pycsw-admin.py -c post_xml -u ".$_POST['urlpycsw']." -x $file_name");
 	ob_clean();
     }
-    header('Location: install_pycsw.php?step=5');
+    header('Location: update_pycsw.php?step=2');
     exit;
   }
   if($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['agree'])){
@@ -94,7 +94,7 @@ function step_2($lang){
 ?>
  <h1 align="center"><?php echo $lang["pycsw update script"]; ?></h1>
  <h3><?php printf($lang["Step %s of %s"], '2', '2'); ?></h3>
-  <p><?php echo $lang["finish"]; ?></p>
+  <p><?php echo $lang["Installation finished."]; echo "<br />"; echo $lang["You can test `pycsw` using the button `pycsw`."]; echo " "; echo $lang["Clicking on `Finish` you will be redirect to the home page."];echo "<br /><br />"; ?></p>
   <?php echo "<button type=\"submit\" value=\"pycsw\" onclick=openUrl(\"".curpageurl()."pycsw/?service=CSW&version=2.0.2&request=GetCapabilities\");>pycsw</button>
   <button type=\"submit\" value=\"Finish\" onclick=openUrl2(\"index.php\");>".$lang["Finish"]."</button>";
   ?>
