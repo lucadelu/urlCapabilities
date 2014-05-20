@@ -39,11 +39,11 @@ $lang_flag=true;
 # Style file, this should be in css directory (available gray.css, green.css)
 $css = "gray.css";
 
-# Image width for preview images
-$iwidth = 600;
+# Image width for preview images (the maximum size for a good visualization of page could be 600)
+$iwidth = 450;
 
-# Image height for preview images
-$iheight = 400;
+# Image height for preview images (this value is the maximum size for a good visualization of page)
+$iheight = 350;
 
 # Image for icon in web browser tab bar
 $ico = "urlcapabilities_logo.ico";
