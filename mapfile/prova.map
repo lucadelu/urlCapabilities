@@ -1,0 +1,83 @@
+MAP
+  EXTENT -180 -90 180 90
+  IMAGETYPE "png"
+  NAME "Landsat_reprojected"
+  SIZE 600 600
+  STATUS ON
+  UNITS METERS
+
+  OUTPUTFORMAT
+    NAME "png"
+    MIMETYPE "image/png"
+    DRIVER "AGG/PNG"
+    EXTENSION "png"
+    IMAGEMODE RGBA
+    TRANSPARENT TRUE
+  END # OUTPUTFORMAT
+
+  PROJECTION
+    "init=epsg:4326"
+  END # PROJECTION
+  LEGEND
+    KEYSIZE 20 10
+    KEYSPACING 5 5
+    LABEL
+      SIZE MEDIUM
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    STATUS ON
+  END # LEGEND
+
+  QUERYMAP
+    SIZE -1 -1
+    STATUS ON
+    STYLE HILITE
+  END # QUERYMAP
+
+  SCALEBAR
+    INTERVALS 4
+    LABEL
+      SIZE MEDIUM
+      OFFSET 0 0
+      SHADOWSIZE 1 1
+      TYPE BITMAP
+    END # LABEL
+    SIZE 200 3
+    STATUS ON
+    UNITS MILES
+  END # SCALEBAR
+
+  WEB
+    FOOTER ""
+    HEADER ""
+    IMAGEPATH "/tmp"
+    IMAGEURL "/tmp"
+    METADATA
+      "wms_onlineresource"	"http://localhost/cgi-bin/mapserv?map=/home/lucadelu/github/urlCapabilities/mapfile/prova.map"
+      "wms_enable_request"	"*"
+      "ows_server_version"	"1.1.1"
+      "ows_srs"	"EPSG:4326 EPSG:3857"
+      "ows_title"	"Landsat_reprojected"
+    END # METADATA
+  END # WEB
+
+  LAYER
+    NAME "landsat"
+    TYPE RASTER
+    STATUS ON
+    CONNECTION "http://hyperquad.telascience.org/cgi-bin/onearth?"
+    CONNECTIONTYPE WMS
+    METADATA
+      "wms_srs"             "EPSG:4326"
+      "wms_name"            "OnEarth_PAN_321_20030801"
+      "wms_server_version"  "1.1.1"
+      "wms_format"          "image/jpeg"
+    END
+    METADATA
+      'ows_title' 'landsat'
+    END
+  END
+
+END
