@@ -13,7 +13,13 @@ urlCapabilities create a page to show the url and the capabilities from wms/wfs 
 APACHE >= 2
 PHP >= 5
 PHP-MAPSCRIPT >= 5.4
+PYCSW (optional)
 
 -- INSTALL ------------------------------------------------------------
 
 See INSTALL for details
+
+-- THANKS TO ---------------------------------------------------------
+
+* Angelos Tzotsos for pycsw support
+* Cristina Rizzo for Spanish translation

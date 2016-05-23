@@ -1,22 +1,27 @@
 == PREREQUISITES ==
 You need apache2, php5 and php5-mapscript installed on your system to use urlCapabilities.
 
-== HOW TO INSTALL ==
-* Download the source with "git clone git://github.com/lucadelu/urlCapabilities.git" or with the button "Download Source" at http://github.com/lucadelu/urlCapabilities
-* Copy the urlCapabilities folder in your web server directory; in debian like distributions is /var/www 
-* Set the path to epsg file (usually /usr/share/proj or /usr/local/share/proj )
-* Copy or link your mapfile/s to urlCapabilities/mapfile/
-* Now you can see the page using a web browser at the address http://localhost/urlCapabilities
+== HOW TO INSTALL URLCAPABILITIES ==
+* Download the source with "git clone https://github.com/lucadelu/pyModis.git" or with the button "Download Source" at http://github.com/lucadelu/urlCapabilities
+* Copy the urlCapabilities folder in your web server directory; in debian like distributions is /var/www
+* Rename php/settings.php.default in php/settings.php
+* Set the path to epsg file (usually /usr/share/proj or /usr/local/share/proj ) and the other options
+* Copy or link your mapfile/s to urlCapabilities/mapfile/ (please read the "MAPFILE SETTINGS" paragraph)
+* Now you can see the page using a web browser at the address http://localhost/urlCapabilities/urlcapabilities.php
 
 You can change the page aspect choosing a different css file inside the css folder or creating a new file
 
-That's all enjoy.
+== PYCSW ==
+To install pycsw instance run install_pycsw.php script, once the installation is finished it is better to remove this file.
+If you want to update pycsw istance you can run update_pycsw.php, it is better to rename it with different name.
+If you don't use pycsw it is better to remove install_pycsw.php and update_pycsw.php scripts.
 
 == MAPFILE SETTINGS ==
 These values are required for urlCapabilities
+The mapfile need the '.map' extension
 -MAP object:
  * NAME
 -WEB object:
- * wms_onlineresource OR wfs_onlineresource OR wcs_onlineresource
+ * wms_onlineresource OR wfs_onlineresource OR wcs_onlineresource OR ows_onlineresource
  * wms_server_version/wms_getcapabilities_version OR wfs_server_version/wfs_getcapabilities_version OR wcs_server_version/wcs_getcapabilities_version
 
